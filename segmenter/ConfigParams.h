@@ -25,6 +25,13 @@ struct audio_codec_info
 	std::string subtype;
 };
 
+enum hls_playlist_type
+{
+	live,
+	event,
+	vod
+};
+
 struct variant_stream_info
 {
 	std::string id;
@@ -32,7 +39,12 @@ struct variant_stream_info
 	bool generate_iframe_url;
 	video_codec_info vid;
 	audio_codec_info aud;
+
+	hls_playlist_type playlist_type;
+	double segment_duration;
+	int sliding_window_duration;
 	MediaPlaylist *mediaUrl;
+
 	IFramePlaylist *iframeUrl;
 };
 

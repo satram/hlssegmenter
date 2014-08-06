@@ -11,9 +11,16 @@
 #include "segmenterCommon.h"
 
 class IFramePlaylist {
+
+	Playlist iframe_playlist;
+
 public:
 	IFramePlaylist();
 	virtual ~IFramePlaylist();
+	void add_header();
+	void add_node();
+	void remove_node();
+	void publish_playlist();
 };
 
 #endif /* IFRAMEPLAYLIST_H_ */

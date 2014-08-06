@@ -43,7 +43,7 @@ all: hls-segementer
 hls-segementer: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++ -L../../../segmenter/Debug -L../../../src/Debug -L/usr/local/lib -o"hls-segementer" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -L/usr/local/lib -L../../../segmenter/Debug -L../../../src/Debug -o"hls-segementer" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

@@ -21,6 +21,8 @@ int main()
 	var1.vid.level = 3.1;
 	var1.aud.codec = mpeg2audio_adts;
 	var1.aud.subtype = "aac-lc";
+	var1.playlist_type = event;
+	var1.segment_duration = 3.0;
 
 	config.add_variant(var1);
 
