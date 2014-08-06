@@ -4,12 +4,21 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../ConfigParams.cpp \
+../IFramePlaylist.cpp \
+../MasterPlaylist.cpp \
 ../testMain.cpp 
 
 OBJS += \
+./ConfigParams.o \
+./IFramePlaylist.o \
+./MasterPlaylist.o \
 ./testMain.o 
 
 CPP_DEPS += \
+./ConfigParams.d \
+./IFramePlaylist.d \
+./MasterPlaylist.d \
 ./testMain.d 
 
 

@@ -28,5 +28,9 @@
 #include <m3u8/Section.h>
 #include <m3u8/Playlist.h>
 
+#include "ConfigParams.h"
+#include "MasterPlaylist.h"
+#include "IFramePlaylist.h"
+
 
 #endif /* SEGMENTERCOMMON_H_ */
