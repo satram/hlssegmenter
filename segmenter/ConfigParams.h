@@ -15,16 +15,17 @@
 struct video_codec_info
 {
 	VIDEO_STREAM_TYPE codec;
-	int profile;
-	int level;
+	std::string profile;
+	double level;
 };
 
 struct audio_codec_info
 {
 	AUDIO_STREAM_TYPE codec;
+	std::string subtype;
 };
 
-struct variant_list_info
+struct variant_stream_info
 {
 	std::string id;
 	int bandwidth;
@@ -37,11 +38,16 @@ struct variant_list_info
 class ConfigParams {
 
 	int num_variant_streams;
-	std::list<variant_list_info> variant_streams;
+	std::list<variant_stream_info> variant_streams;
 
 public:
 	ConfigParams();
 	virtual ~ConfigParams();
+	void add_variant(variant_stream_info &var);
+
+	friend class MasterPlaylist;
+	friend class IFramePlaylist;
+
 };
 
 #endif /* CONFIGPARAMS_H_ */

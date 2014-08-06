@@ -8,10 +8,18 @@
 #include "ConfigParams.h"
 
 ConfigParams::ConfigParams() {
-	// TODO Auto-generated constructor stub
-
+	num_variant_streams = 0;
 }
 
 ConfigParams::~ConfigParams() {
 	// TODO Auto-generated destructor stub
 }
+
+void ConfigParams::add_variant(variant_stream_info & var)
+{
+	num_variant_streams++;
+	variant_streams.push_back(var);
+
+}
+
+
