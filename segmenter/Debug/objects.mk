@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -lmediatools -llog4c
+LIBS :=
 
