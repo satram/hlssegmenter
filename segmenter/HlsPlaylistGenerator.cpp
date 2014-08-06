@@ -15,3 +15,10 @@ HlsPlaylistGenerator::HlsPlaylistGenerator() {
 HlsPlaylistGenerator::~HlsPlaylistGenerator() {
 	// TODO Auto-generated destructor stub
 }
+
+void HlsPlaylistGenerator::test_playlist_gen(ConfigParams & config)
+{
+
+}
+
+

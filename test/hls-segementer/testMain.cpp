@@ -24,5 +24,12 @@ int main()
 
 	config.add_variant(var1);
 
+	HlsPlaylistGenerator hlswrapper;
+	hlswrapper.test_playlist_gen(config);
+
+
+	config.remove_variant("child1");
+
+
 	return 0;
 }

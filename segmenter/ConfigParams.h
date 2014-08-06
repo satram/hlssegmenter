@@ -32,6 +32,8 @@ struct variant_stream_info
 	bool generate_iframe_url;
 	video_codec_info vid;
 	audio_codec_info aud;
+	MediaPlaylist *mediaUrl;
+	IFramePlaylist *iframeUrl;
 };
 
 
@@ -44,9 +46,11 @@ public:
 	ConfigParams();
 	virtual ~ConfigParams();
 	void add_variant(variant_stream_info &var);
+	void remove_variant(std::string id);
 
 	friend class MasterPlaylist;
 	friend class IFramePlaylist;
+	friend class HlsPlaylistGenerator;
 
 };
 

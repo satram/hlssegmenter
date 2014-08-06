@@ -28,9 +28,15 @@
 #include <m3u8/Section.h>
 #include <m3u8/Playlist.h>
 
-#include "ConfigParams.h"
+class IFramePlaylist;
+class ConfigParams;
+class MasterPlaylist;
+class MediaPlaylist;
+
 #include "MasterPlaylist.h"
 #include "IFramePlaylist.h"
-
+#include "MediaPlaylist.h"
+#include "ConfigParams.h"
+#include "HlsPlaylistGenerator.h"
 
 #endif /* SEGMENTERCOMMON_H_ */
