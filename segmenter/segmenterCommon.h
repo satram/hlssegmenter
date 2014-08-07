@@ -32,11 +32,12 @@ class IFramePlaylist;
 class ConfigParams;
 class MasterPlaylist;
 class MediaPlaylist;
+struct variant_stream_info;
 
+#include "ConfigParams.h"
 #include "MasterPlaylist.h"
 #include "IFramePlaylist.h"
 #include "MediaPlaylist.h"
-#include "ConfigParams.h"
 #include "HlsPlaylistGenerator.h"
 
 #endif /* SEGMENTERCOMMON_H_ */

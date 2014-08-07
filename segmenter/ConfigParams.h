@@ -51,7 +51,6 @@ struct variant_stream_info
 
 class ConfigParams {
 
-	int num_variant_streams;
 	std::list<variant_stream_info> variant_streams;
 
 public:

@@ -18,7 +18,7 @@ public:
 	MediaPlaylist();
 	virtual ~MediaPlaylist();
 
-	void add_header();
+	void add_header(variant_stream_info &stream_info);
 	void add_node();
 	void remove_node();
 	void publish_playlist();

@@ -1,4 +1,4 @@
-/*
+	/*
  * HlsPlaylistGenerator.cpp
  *
  *  Created on: Aug 6, 2014
@@ -18,7 +18,12 @@ HlsPlaylistGenerator::~HlsPlaylistGenerator() {
 
 void HlsPlaylistGenerator::test_playlist_gen(ConfigParams & config)
 {
-
+	for(auto it = config.variant_streams.begin(), ite = config.variant_streams.end(); it != ite; it++)
+	{
+		it->mediaUrl->publish_playlist();
+		if(it->generate_iframe_url)
+			it->iframeUrl->publish_playlist();
+	}
 }
 
 
