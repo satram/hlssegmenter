@@ -34,7 +34,7 @@ void MasterPlaylist::add_header(ConfigParams & config)
 		std::ostringstream oss;
 		oss << "\"";
 		if(it->vid.codec == h264video)
-			oss << "\"avc1";
+			oss << "avc1";
 		if(it->vid.profile == "baseline" && it->vid.level == 3.1)
 			oss << ".42001f";
 		if(it->aud.codec == mpeg4audio_latm)

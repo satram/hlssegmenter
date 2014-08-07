@@ -43,7 +43,7 @@ all: ts-parser-cpp
 ts-parser-cpp: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++ -L../../../src/Debug -L/usr/local/lib -o"ts-parser-cpp" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -L../../../src/Debug -L/usr/local/lib -Wl,-rpath=../../src/Debug -o"ts-parser-cpp" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

@@ -7,8 +7,34 @@
 
 #include "segmenterCommon.h"
 
+#define INP_BUF_SIZE (100 * TS_PKT_SIZE_BYTES)
 
-int main()
+void ts_parser_partialbuf_input(char *argv[])
+{
+    std::ifstream infile;
+    infile.open(argv[1], std::ios::in | std::ios::binary);
+    char *inp_buffer = new char[INP_BUF_SIZE];
+    if(infile.is_open())
+    {
+        ParseTsStream input_ts_stream;
+        while(!infile.eof())
+        {
+        	infile.read(inp_buffer, INP_BUF_SIZE);
+            input_ts_stream.open(inp_buffer, INP_BUF_SIZE);
+            input_ts_stream.parse_bytestream();
+
+            input_ts_stream.print_pid_list();
+            input_ts_stream.print_stats();
+
+            input_ts_stream.close();
+        }
+        infile.close();
+    }
+    delete inp_buffer;
+}
+
+
+int main(int argc, char *argv[])
 {
 	ConfigParams config;
 
@@ -32,8 +58,7 @@ int main()
 	hlswrapper.test_playlist_gen(config);
 
 
-	config.remove_variant("child1");
-
+	ts_parser_partialbuf_input(argv);
 
 	return 0;
 }

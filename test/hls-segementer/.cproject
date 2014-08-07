@@ -48,6 +48,7 @@
 									<listOptionValue builtIn="false" value="../../../segmenter/Debug"/>
 									<listOptionValue builtIn="false" value="../../../src/Debug"/>
 								</option>
+								<option id="gnu.cpp.link.option.flags.1847163601" name="Linker flags" superClass="gnu.cpp.link.option.flags" value="-Wl,-rpath=../../src/Debug,-rpath=../../segmenter/Debug" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.415959560" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -526,6 +527,7 @@
 									<listOptionValue builtIn="false" value="../../../src/Debug"/>
 									<listOptionValue builtIn="false" value="/usr/local/lib"/>
 								</option>
+								<option id="gnu.cpp.link.option.flags.375781405" name="Linker flags" superClass="gnu.cpp.link.option.flags" value="-Wl,-rpath=../../src/Debug,-rpath=../../segmenter/Debug" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.909305067" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
