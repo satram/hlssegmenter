@@ -37,19 +37,19 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: hls-segementer
+all: hlssegmenter
 
 # Tool invocations
-hls-segementer: $(OBJS) $(USER_OBJS)
+hlssegmenter: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++ -L/usr/local/lib -L../../../segmenter/Debug -L../../../src/Debug -Wl,-rpath=../../src/Debug,-rpath=../../segmenter/Debug -o"hls-segementer" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -L/usr/local/lib -L../../../segmenter/Debug -L../../../src/Debug -Wl,-rpath=../../src/Debug,-rpath=../../segmenter/Debug -o"hlssegmenter" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(OBJS)$(C++_DEPS)$(C_DEPS)$(CC_DEPS)$(CPP_DEPS)$(EXECUTABLES)$(CXX_DEPS)$(C_UPPER_DEPS) hls-segementer
+	-$(RM) $(OBJS)$(C++_DEPS)$(C_DEPS)$(CC_DEPS)$(CPP_DEPS)$(EXECUTABLES)$(CXX_DEPS)$(C_UPPER_DEPS) hlssegmenter
 	-@echo ' '
 
 .PHONY: all clean dependents
