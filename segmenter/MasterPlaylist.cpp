@@ -29,27 +29,41 @@ void MasterPlaylist::add_header(ConfigParams & config)
 	header.add_tag("VERSION", 3);
 	playlist.add_section(header);
 
+	for(auto it = config.variant_streams.begin(), ite= config.variant_streams.end(); it != ite; it++)
 	{
-		Section node("n1");
-		Tag t("STREAM-INF");
-		t.add_property("BANDWIDTH", 512000);
-		t.add_property("RESOLUTION","1280x720");
-		t.add_property("CODECS","\"avc1.42001f,mp4a.40.2\"");
-		node.add_tag(t);
-		node.set_path("http://192.168.1.254:8080/hlsserver/");
-		node.set_locator("media.m3u8");
-		playlist.add_section(node);
-	}
+		std::ostringstream oss;
+		oss << "\"";
+		if(it->vid.codec == h264video)
+			oss << "\"avc1";
+		if(it->vid.profile == "baseline" && it->vid.level == 3.1)
+			oss << ".42001f";
+		if(it->aud.codec == mpeg4audio_latm)
+			oss << ",mp4a";
+		if(it->aud.subtype == "aac-lc")
+			oss << ".40.2";
+		oss << "\"";
+		{
+			Section node("n1");
+			Tag t("STREAM-INF");
+			t.add_property("BANDWIDTH", it->bandwidth);
+			t.add_property("RESOLUTION",it->vid.resolution);
+			t.add_property("CODECS",oss.str());
+			node.add_tag(t);
+			node.set_path((it->web_server_loc + it->id).c_str());
+			node.set_locator("media.m3u8");
+			playlist.add_section(node);
+		}
 
-	{
-		Section node("n1");
-		Tag t("I-FRAME-STREAM-INF");
-		t.add_property("BANDWIDTH", 512000);
-		t.add_property("RESOLUTION","1280x720");
-		t.add_property("CODECS","\"avc1.42001f,mp4a.40.2\"");
-		t.add_property("URI","http://192.168.1.254:8080/hlsserver/iframe.m3u8");
-		node.add_tag(t);
-		playlist.add_section(node);
+		{
+			Section node("n1");
+			Tag t("I-FRAME-STREAM-INF");
+			t.add_property("BANDWIDTH", 512000);
+			t.add_property("RESOLUTION","1280x720");
+			t.add_property("CODECS",oss.str());
+			t.add_property("URI",it->web_server_loc + it->id + "/iframe.m3u8");
+			node.add_tag(t);
+			playlist.add_section(node);
+		}
 	}
 }
 

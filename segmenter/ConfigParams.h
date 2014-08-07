@@ -17,6 +17,7 @@ struct video_codec_info
 	VIDEO_STREAM_TYPE codec;
 	std::string profile;
 	double level;
+	std::string resolution;
 };
 
 struct audio_codec_info
@@ -43,8 +44,10 @@ struct variant_stream_info
 	hls_playlist_type playlist_type;
 	double segment_duration;
 	int sliding_window_duration;
-	MediaPlaylist *mediaUrl;
+	std::string web_server_loc;
 
+
+	MediaPlaylist *mediaUrl;
 	IFramePlaylist *iframeUrl;
 };
 
