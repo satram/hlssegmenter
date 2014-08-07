@@ -8,8 +8,7 @@
 #include "HlsPlaylistGenerator.h"
 
 HlsPlaylistGenerator::HlsPlaylistGenerator() {
-	// TODO Auto-generated constructor stub
-
+	master = new MasterPlaylist();
 }
 
 HlsPlaylistGenerator::~HlsPlaylistGenerator() {
@@ -18,6 +17,8 @@ HlsPlaylistGenerator::~HlsPlaylistGenerator() {
 
 void HlsPlaylistGenerator::test_playlist_gen(ConfigParams & config)
 {
+	master->add_header(config);
+	master->publish_playlist();
 	for(auto it = config.variant_streams.begin(), ite = config.variant_streams.end(); it != ite; it++)
 	{
 		it->mediaUrl->publish_playlist();

@@ -28,13 +28,15 @@
 #include <m3u8/Section.h>
 #include <m3u8/Playlist.h>
 
-class IFramePlaylist;
 class ConfigParams;
+class PlaylistInterface;
+class IFramePlaylist;
 class MasterPlaylist;
 class MediaPlaylist;
 struct variant_stream_info;
 
 #include "ConfigParams.h"
+#include "PlaylistInterface.h"
 #include "MasterPlaylist.h"
 #include "IFramePlaylist.h"
 #include "MediaPlaylist.h"

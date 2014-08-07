@@ -10,12 +10,20 @@
 
 #include "segmenterCommon.h"
 
-class MasterPlaylist {
+class MasterPlaylist : public PlaylistInterface
+{
+	Playlist playlist;
 
 public:
 	MasterPlaylist();
 	virtual ~MasterPlaylist();
-	//MasterPlaylist(ConfigParams &config);
+
+	void add_header(ConfigParams & config);
+	void add_header(variant_stream_info &stream_info);
+	void add_node();
+	void remove_node();
+	void publish_playlist();
+	void add_footer();
 };
 
 #endif /* MASTERPLAYLIST_H_ */
