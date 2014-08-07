@@ -17,8 +17,8 @@ public:
 	HlsPlaylistGenerator();
 	virtual ~HlsPlaylistGenerator();
 
-	//deprecated
-	void test_playlist_gen(ConfigParams &config);
+	void generate_header(ConfigParams &config);
+	void update_header();
 };
 
 #endif /* HLSPLAYLISTGENERATOR_H_ */

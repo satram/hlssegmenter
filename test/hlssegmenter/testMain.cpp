@@ -9,33 +9,13 @@
 
 #define INP_BUF_SIZE (100 * TS_PKT_SIZE_BYTES)
 
-void ts_parser_partialbuf_input(char *argv[])
-{
-    std::ifstream infile;
-    infile.open(argv[1], std::ios::in | std::ios::binary);
-    char *inp_buffer = new char[INP_BUF_SIZE];
-    if(infile.is_open())
-    {
-        ParseTsStream input_ts_stream;
-        while(!infile.eof())
-        {
-        	infile.read(inp_buffer, INP_BUF_SIZE);
-            input_ts_stream.open(inp_buffer, INP_BUF_SIZE);
-            input_ts_stream.parse_bytestream();
-
-            input_ts_stream.print_pid_list();
-            input_ts_stream.print_stats();
-
-            input_ts_stream.close();
-        }
-        infile.close();
-    }
-    delete inp_buffer;
-}
-
 
 int main(int argc, char *argv[])
 {
+
+	/*
+	 * Set the input config parameters
+	 */
 	ConfigParams config;
 
 	variant_stream_info var1;
@@ -54,11 +34,33 @@ int main(int argc, char *argv[])
 
 	config.add_variant(var1);
 
-	HlsPlaylistGenerator hlswrapper;
-	hlswrapper.test_playlist_gen(config);
+
+	/*
+	 * object for hls segmenter is created here
+	 * this class can do segmentation based on config params
+	 * and generate playlist as well
+	 */
+	Segmenter hls_segmenter(config);
 
 
-	ts_parser_partialbuf_input(argv);
+    std::ifstream infile;
+    infile.open(argv[1], std::ios::in | std::ios::binary);
+    char *inp_buffer = new char[INP_BUF_SIZE];
+    if(infile.is_open())
+    {
+        while(!infile.eof())
+        {
+        	infile.read(inp_buffer, INP_BUF_SIZE);
+        	/*
+        	 * send the input ts packets
+        	 * both segmentation and playlist generation
+        	 * happens inside this class
+        	 */
+        	hls_segmenter.parse_ts_packets(inp_buffer, INP_BUF_SIZE);
+        }
+        infile.close();
+    }
+    delete inp_buffer;
 
 	return 0;
 }

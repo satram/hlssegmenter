@@ -15,7 +15,7 @@ HlsPlaylistGenerator::~HlsPlaylistGenerator() {
 	// TODO Auto-generated destructor stub
 }
 
-void HlsPlaylistGenerator::test_playlist_gen(ConfigParams & config)
+void HlsPlaylistGenerator::generate_header(ConfigParams & config)
 {
 	master->add_header(config);
 	master->publish_playlist();
@@ -26,5 +26,11 @@ void HlsPlaylistGenerator::test_playlist_gen(ConfigParams & config)
 			it->iframeUrl->publish_playlist();
 	}
 }
+
+void HlsPlaylistGenerator::update_header()
+{
+}
+
+
 
 

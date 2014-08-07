@@ -8,21 +8,24 @@ CPP_SRCS += \
 ../HlsPlaylistGenerator.cpp \
 ../IFramePlaylist.cpp \
 ../MasterPlaylist.cpp \
-../MediaPlaylist.cpp 
+../MediaPlaylist.cpp \
+../Segmenter.cpp 
 
 OBJS += \
 ./ConfigParams.o \
 ./HlsPlaylistGenerator.o \
 ./IFramePlaylist.o \
 ./MasterPlaylist.o \
-./MediaPlaylist.o 
+./MediaPlaylist.o \
+./Segmenter.o 
 
 CPP_DEPS += \
 ./ConfigParams.d \
 ./HlsPlaylistGenerator.d \
 ./IFramePlaylist.d \
 ./MasterPlaylist.d \
-./MediaPlaylist.d 
+./MediaPlaylist.d \
+./Segmenter.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

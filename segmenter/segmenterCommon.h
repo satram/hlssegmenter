@@ -34,6 +34,8 @@ class IFramePlaylist;
 class MasterPlaylist;
 class MediaPlaylist;
 struct variant_stream_info;
+class Segmenter;
+class HlsPlaylistGenerator;
 
 #include "ConfigParams.h"
 #include "PlaylistInterface.h"
@@ -41,5 +43,6 @@ struct variant_stream_info;
 #include "IFramePlaylist.h"
 #include "MediaPlaylist.h"
 #include "HlsPlaylistGenerator.h"
+#include "Segmenter.h"
 
 #endif /* SEGMENTERCOMMON_H_ */
