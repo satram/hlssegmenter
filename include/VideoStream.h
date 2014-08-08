@@ -60,6 +60,7 @@ public:
 	~VideoPktInfo();
 	void set_prev(VideoPktInfo *prev);
 	friend class VideoStream;
+	friend class Segmenter;
 };
 
 
