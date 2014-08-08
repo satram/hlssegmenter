@@ -35,7 +35,17 @@ void Segmenter::create_index_table()
             {
                 if((*it)->slice_type[i].first == idr)
                 {
-                    index.push_back(new idr_info(ts_packet_count + (*it)->pkt_count, (*it)->dts, (*it)->byte_offset + byte_offset));
+                	IFrameIndex * last_iframe = index.back();
+                	if(last_iframe != 0)
+                	{
+                		last_iframe->finalize(ts_packet_count + (*it)->pkt_count, (*it)->dts, (*it)->byte_offset + byte_offset);
+                	}
+                    index.push_back(new IFrameIndex(ts_packet_count + (*it)->pkt_count, (*it)->dts, (*it)->byte_offset + byte_offset));
+                }
+                else if ((*it)->slice_type[i].first == non_idr)
+                {
+                	IFrameIndex * last_iframe = index.back();
+                	last_iframe->update(ts_packet_count + (*it)->pkt_count, (*it)->dts, (*it)->byte_offset + byte_offset);
                 }
             }
         }
