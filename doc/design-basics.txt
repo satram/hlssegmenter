@@ -1,0 +1,33 @@
+background info
+the current hls streamer design
+- publish a playlist with reference to recorded content (mpg files in HDD) with byteoffset and size
+- hls player asks for first chunk
+- we start transcoder by feeding the input data
+- transcoder calls our callback, gives us the transcoded data
+- we send the transcoded data via http socket to player
+- current we don't have logic to say when EOS of that chunk has arrived, hence the http socket never gets closed
+
+Problem Statement
+- how to identify the EOS of transcoded chunks of given duration(2s, 3sec or anything config)
+
+new output chunking logic
+Without marker packet, we can identify the chunk offset by video frame count.
+- parse ts header for pid and payload_unit_start_indicator flag
+- parse pat to get pmt pid
+- parse pmt to get video pid and audio pid
+- if video pid and PUSI flag is 1, that indicates a video frame start. 
+     - parse PES header, get PTS and keep track of video_frame_count, save the byte offset 
+-if audio pid and PUSI flag is 1, that doesn't guarantee a audio frame start
+    - parse PES header, get audio PTS alone and save byte offset
+based on input frame rate, we can decide on output chunks EOS from video_frame_count calculated before
+
+ ts-header-chunking-logic.png
+​
+new design for hls streamer
+- hls server publishes parent playlist for all recorded content
+- when the hlsplayer request for child playlist, we start transcoding in another thread
+- transcoding thread produces output to a ts file (h264, aac)
+- we publish child playlist with EXT-X-BYTERANGE pointing to same file with different byte offset and size
+- http (mongoose) server takes care of the serving the byte range of output file and trick play
+- we publish the child playlist in EVENT mode when transcoding is on-going and change to VOD mode at the end with EXT-X-ENDLIST
+- output playlist and transcoded file will remain in server for some agreeable time.
