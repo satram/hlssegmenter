@@ -41,28 +41,29 @@ struct variant_stream_info
 	video_codec_info vid;
 	audio_codec_info aud;
 
-	hls_playlist_type playlist_type;
-	double segment_duration;
-	int sliding_window_duration;
-	std::string web_server_loc;
-
-
 	MediaPlaylist *mediaUrl;
 	IFramePlaylist *iframeUrl;
 };
 
 
 class ConfigParams {
-
 	std::list<variant_stream_info> variant_streams;
 
 public:
+	//common parameters across variants streams
+	std::string web_server_url;
+	std::string output_folder;
+	hls_playlist_type playlist_type;
+	double segment_duration;
+	int sliding_window_duration;
+
 	ConfigParams();
 	virtual ~ConfigParams();
 	void add_variant(variant_stream_info &var);
 	void remove_variant(std::string id);
 
 	friend class MasterPlaylist;
+	friend class MediaPlaylist;
 	friend class IFramePlaylist;
 	friend class HlsPlaylistGenerator;
 

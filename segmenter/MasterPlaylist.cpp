@@ -49,7 +49,7 @@ void MasterPlaylist::add_header(ConfigParams & config)
 			t.add_property("RESOLUTION",it->vid.resolution);
 			t.add_property("CODECS",oss.str());
 			node.add_tag(t);
-			node.set_path((it->web_server_loc + it->id).c_str());
+			node.set_path((config.web_server_url + it->id).c_str());
 			node.set_locator("media.m3u8");
 			playlist.add_section(node);
 		}
@@ -60,7 +60,7 @@ void MasterPlaylist::add_header(ConfigParams & config)
 			t.add_property("BANDWIDTH", 512000);
 			t.add_property("RESOLUTION","1280x720");
 			t.add_property("CODECS",oss.str());
-			t.add_property("URI",it->web_server_loc + it->id + "/iframe.m3u8");
+			t.add_property("URI",config.web_server_url + it->id + "/iframe.m3u8");
 			node.add_tag(t);
 			playlist.add_section(node);
 		}

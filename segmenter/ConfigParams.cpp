@@ -16,14 +16,6 @@ ConfigParams::~ConfigParams() {
 
 void ConfigParams::add_variant(variant_stream_info & var)
 {
-	var.mediaUrl = new MediaPlaylist();
-	var.mediaUrl->add_header(var);
-
-	if(var.generate_iframe_url)
-	{
-		var.iframeUrl = new IFramePlaylist();
-		var.iframeUrl->add_header(var);
-	}
 	variant_streams.push_back(var);
 }
 

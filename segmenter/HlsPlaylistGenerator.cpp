@@ -21,9 +21,17 @@ void HlsPlaylistGenerator::generate_header(ConfigParams & config)
 	master->publish_playlist();
 	for(auto it = config.variant_streams.begin(), ite = config.variant_streams.end(); it != ite; it++)
 	{
+		it->mediaUrl = new MediaPlaylist();
+		it->mediaUrl->add_header(*it);
+		it->mediaUrl->add_header(config);
 		it->mediaUrl->publish_playlist();
 		if(it->generate_iframe_url)
+		{
+			it->iframeUrl = new IFramePlaylist();
+			it->iframeUrl->add_header(*it);
+			it->iframeUrl->add_header(config);
 			it->iframeUrl->publish_playlist();
+		}
 	}
 }
 

@@ -31,6 +31,7 @@ class Segmenter {
 
 	ParseTsStream input_ts_stream;
 	HlsPlaylistGenerator* hls_playlist;
+    void create_index_table();
 
 public:
 	Segmenter(ConfigParams &config);

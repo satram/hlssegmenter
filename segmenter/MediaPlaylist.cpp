@@ -21,11 +21,6 @@ void MediaPlaylist::add_header(variant_stream_info &stream_info)
 	Section header("header");
 	header.add_tag("M3U");
 	header.add_tag("VERSION", 3);
-	if(stream_info.playlist_type == event)
-		header.add_tag("PLAYLIST-TYPE", "EVENT");
-	else if(stream_info.playlist_type == vod)
-		header.add_tag("PLAYLIST-TYPE", "VOD");
-	header.add_tag("TARGETDURATION", stream_info.segment_duration);
 	header.add_tag("MEDIA-SEQUENCE", 0);
 	playlist.add_section(header);
 }
@@ -40,6 +35,13 @@ void MediaPlaylist::remove_node()
 
 void MediaPlaylist::add_header(ConfigParams & config)
 {
+	Section header = playlist.get_section("header");
+	if(config.playlist_type == event)
+		header.add_tag("PLAYLIST-TYPE", "EVENT");
+	else if(config.playlist_type == vod)
+		header.add_tag("PLAYLIST-TYPE", "VOD");
+	header.add_tag("TARGETDURATION", config.segment_duration);
+	playlist.modify_section(header);
 }
 
 void MediaPlaylist::publish_playlist()
