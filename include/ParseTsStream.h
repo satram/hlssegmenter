@@ -42,11 +42,13 @@ public:
 	virtual ~ParseTsStream();
 	void print_pid_list();
 	void print_stats();
+	int get_num_packets();
     void open(std::string & inpFile);
     void open(std::streambuf *rdbuf);
     void open(const char *buf, int length);
     void close();
     void parse_bytestream();
+    std::list<VideoPktInfo *> &get_pkt_info();
 };
 
 #endif /* PARSETSSTREAM_H_ */

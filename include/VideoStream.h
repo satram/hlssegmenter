@@ -62,11 +62,14 @@ public:
 	friend class VideoStream;
 };
 
+
+
 class VideoStream: public ElementaryStream
 {
 	log4c_category_t *mycat;
 
 	std::list<VideoPktInfo *> pkt_list;
+
 	VideoPktInfo *prev;
 
 	VIDEO_STREAM_TYPE stream_type;
@@ -81,6 +84,7 @@ public:
 	void insert_pkt(TsPacket *pkt);
 	bool validate_pid(int pid);
 	void print_stats();
+	std::list<VideoPktInfo *> &get_pkt_info();
 };
 
 #endif /* VIDEOSTREAM_H_ */

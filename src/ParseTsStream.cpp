@@ -28,11 +28,11 @@ ParseTsStream::ParseTsStream()
 
 
 ParseTsStream::~ParseTsStream() {
-	ts_pkt_profiler.print_stats();
-	video_pkt_profiler.print_stats();
-	audio_pkt_profiler.print_stats();
-	input_memcopy.print_stats();
-	pes_pkt_copy.print_stats();
+//	ts_pkt_profiler.print_stats();
+//	video_pkt_profiler.print_stats();
+//	audio_pkt_profiler.print_stats();
+//	input_memcopy.print_stats();
+//	pes_pkt_copy.print_stats();
 	delete pat_packet;
 	delete pmt_packet;
 	if ( log4c_fini()){
@@ -185,8 +185,24 @@ void ParseTsStream::print_pid_list()
 		log4c_category_log(mycat, LOG4C_PRIORITY_INFO, "%4d -- %8d", it->first, it->second);
 	}
 }
+
+int ParseTsStream::get_num_packets()
+{
+	int num_pkts = 0;
+	for(auto it = pid_list.begin(), ite = pid_list.end(); it != ite; it++)
+	{
+		num_pkts += it->second;
+	}
+	return num_pkts;
+}
+
 void ParseTsStream::print_stats()
 {
 	video_stream->print_stats();
 	audio_stream->print_stats();
+}
+
+std::list<VideoPktInfo *> &ParseTsStream::get_pkt_info()
+{
+	return (video_stream->get_pkt_info());
 }

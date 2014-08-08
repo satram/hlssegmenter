@@ -72,6 +72,11 @@ void VideoStream::print_stats()
 	}
 }
 
+std::list<VideoPktInfo *> &VideoStream::get_pkt_info()
+{
+	return pkt_list;
+}
+
 VideoPktInfo::VideoPktInfo(TsPacket *ts)
 {
 	pts = ts->get_PTS();

@@ -10,7 +10,21 @@
 
 #include "segmenterCommon.h"
 
+struct idr_info
+{
+	int pkt_counter;
+	long long pts;
+	double duration_from_last_idr;
+	bool chunk_start;
+	idr_info(int count, long long timestamp): pkt_counter(count), pts(timestamp){};
+	virtual ~idr_info();
+};
+
+
 class Segmenter {
+
+	std::list<idr_info> index;
+	int ts_packet_count;
 
 	ParseTsStream input_ts_stream;
 	HlsPlaylistGenerator* hls_playlist;
