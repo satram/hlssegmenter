@@ -41,6 +41,13 @@ struct variant_stream_info
 	video_codec_info vid;
 	audio_codec_info aud;
 
+	//updated based on global config params
+	std::string transcoded_output_url;
+	std::string transcoded_output_path;
+	std::string transcoded_output_filename;
+	std::string media_playlist_filename;
+	std::string iframe_playlist_filename;
+
 	MediaPlaylist *mediaUrl;
 	IFramePlaylist *iframeUrl;
 };

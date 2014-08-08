@@ -35,7 +35,7 @@ void Segmenter::create_index_table()
             {
                 if((*it)->slice_type[i].first == idr)
                 {
-                    index.push_back(new idr_info(ts_packet_count + (*it)->pkt_count, (*it)->pts, (*it)->byte_offset + byte_offset));
+                    index.push_back(new idr_info(ts_packet_count + (*it)->pkt_count, (*it)->dts, (*it)->byte_offset + byte_offset));
                 }
             }
         }

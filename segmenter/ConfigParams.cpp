@@ -7,11 +7,19 @@
 
 #include "ConfigParams.h"
 
-ConfigParams::ConfigParams() {
+ConfigParams::ConfigParams()
+{
 }
 
-ConfigParams::~ConfigParams() {
-	// TODO Auto-generated destructor stub
+ConfigParams::~ConfigParams()
+{
+	for(auto it = variant_streams.begin(), ite = variant_streams.end(); it != ite; it++)
+	{
+		variant_streams.erase(it);
+		delete (it->mediaUrl);
+		delete (it->iframeUrl);
+		break;
+	}
 }
 
 void ConfigParams::add_variant(variant_stream_info & var)
