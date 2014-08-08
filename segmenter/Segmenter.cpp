@@ -11,6 +11,7 @@ Segmenter::Segmenter(ConfigParams &config) {
 	hls_playlist = new HlsPlaylistGenerator();
 	hls_playlist->generate_header(config);
 	ts_packet_count = 0;
+	byte_offset = 0;
 }
 
 Segmenter::~Segmenter() {
@@ -41,7 +42,6 @@ void Segmenter::parse_ts_packets(const char *inp_buffer, int bufsize)
 			}
 		}
 	}
-
 
     hls_playlist->update_header();
 

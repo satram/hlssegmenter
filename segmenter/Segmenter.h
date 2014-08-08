@@ -19,7 +19,7 @@ class idr_info
 	bool chunk_start;
 public:
 	idr_info(int count, long long timestamp, long long byte_offset): total_pkt_count(count), pts(timestamp), total_byte_offset(byte_offset){};
-	virtual ~idr_info();
+	~idr_info(){};
 };
 
 
@@ -27,7 +27,7 @@ class Segmenter {
 
 	std::list<idr_info *> index;
 	int ts_packet_count;
-	int byte_offset;
+	long long byte_offset;
 
 	ParseTsStream input_ts_stream;
 	HlsPlaylistGenerator* hls_playlist;
