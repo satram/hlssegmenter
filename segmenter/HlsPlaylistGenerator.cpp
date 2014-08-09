@@ -7,7 +7,8 @@
 
 #include "HlsPlaylistGenerator.h"
 
-HlsPlaylistGenerator::HlsPlaylistGenerator() {
+HlsPlaylistGenerator::HlsPlaylistGenerator()
+{
 	master = new MasterPlaylist();
 }
 

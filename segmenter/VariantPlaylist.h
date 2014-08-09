@@ -24,6 +24,8 @@ public:
 	VariantPlaylist(ConfigParams &config, variant_stream_info &var);
 	virtual ~VariantPlaylist();
 	void publish_playlist();
+	void update_iframe_playlist(IFrameIndex *index);
+	void update_media_playlist(IFrameIndex *index);
 };
 
 #endif /* VARIANTPLAYLIST_H_ */

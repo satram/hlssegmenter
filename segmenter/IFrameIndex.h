@@ -27,7 +27,6 @@ public:
 	}
 	~decision_flags() {};
 	friend class IFrameIndex;
-	friend class HlsPlaylistGenerator;
 	friend class Segmenter;
 };
 
@@ -51,6 +50,7 @@ public:
 	void start_chunk();
 	void finalize_chunk(int count, long long timestamp, long long byte_offset);
 	friend class Segmenter;
+	friend class VariantPlaylist;
 };
 
 #endif /* IFRAMEINDEX_H_ */

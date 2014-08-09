@@ -55,7 +55,7 @@ void Segmenter::create_index_table()
     }
 }
 
-void Segmenter::take_decisions()
+void Segmenter::update_playlists()
 {
 	for(auto it = index.begin(), ite = index.end();it != ite;it++)
 	{
@@ -80,7 +80,7 @@ void Segmenter::parse_ts_packets(const char *inp_buffer, int bufsize)
     input_ts_stream.parse_bytestream();
 
     create_index_table();
-    take_decisions();
+    update_playlists();
 
     ts_packet_count += input_ts_stream.get_num_packets();
     byte_offset += bufsize;
