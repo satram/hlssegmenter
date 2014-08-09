@@ -40,16 +40,6 @@ struct variant_stream_info
 	bool generate_iframe_url;
 	video_codec_info vid;
 	audio_codec_info aud;
-
-	//updated based on global config params
-	std::string transcoded_output_url;
-	std::string transcoded_output_path;
-	std::string transcoded_output_filename;
-	std::string media_playlist_filename;
-	std::string iframe_playlist_filename;
-
-	MediaPlaylist *mediaUrl;
-	IFramePlaylist *iframeUrl;
 };
 
 
@@ -73,6 +63,7 @@ public:
 	friend class MediaPlaylist;
 	friend class IFramePlaylist;
 	friend class HlsPlaylistGenerator;
+	friend class variants_playlist;
 
 };
 

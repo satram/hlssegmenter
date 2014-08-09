@@ -31,6 +31,9 @@ void Segmenter::create_index_table()
     {
         if((*it)->PUSI_flag)
         {
+        	int accum_pktcount = ts_packet_count + (*it)->pkt_count;
+        	long long accum_byteoffset = (*it)->byte_offset + byte_offset;
+        	long long timestamp = (*it)->dts;
             for(int i = 0;i < (*it)->detected_slice_type_count;i++)
             {
                 if((*it)->slice_type[i].first == idr)
@@ -38,19 +41,38 @@ void Segmenter::create_index_table()
                 	IFrameIndex * last_iframe = index.back();
                 	if(last_iframe != 0)
                 	{
-                		last_iframe->finalize(ts_packet_count + (*it)->pkt_count, (*it)->dts, (*it)->byte_offset + byte_offset);
+                		last_iframe->finalize(accum_pktcount, timestamp , accum_byteoffset);
                 	}
-                    index.push_back(new IFrameIndex(ts_packet_count + (*it)->pkt_count, (*it)->dts, (*it)->byte_offset + byte_offset));
+                    index.push_back(new IFrameIndex(accum_pktcount, timestamp , accum_byteoffset));
                 }
                 else if ((*it)->slice_type[i].first == non_idr)
                 {
                 	IFrameIndex * last_iframe = index.back();
-                	last_iframe->update(ts_packet_count + (*it)->pkt_count, (*it)->dts, (*it)->byte_offset + byte_offset);
+                	last_iframe->update(accum_pktcount, timestamp , accum_byteoffset);
                 }
             }
         }
     }
 }
+
+void Segmenter::take_decisions()
+{
+	for(auto it = index.begin(), ite = index.end();it != ite;it++)
+	{
+		if((*it)->flags.update_media_playlist.first && !(*it)->flags.update_media_playlist.second)
+		{
+			hls_playlist->update_media(*it);
+			(*it)->flags.update_media_playlist.second = true;
+		}
+		if((*it)->flags.update_iframe_playlist.first && !(*it)->flags.update_iframe_playlist.second)
+		{
+			hls_playlist->update_iframe(*it);
+			(*it)->flags.update_iframe_playlist.second = true;
+		}
+	}
+}
+
+
 
 void Segmenter::parse_ts_packets(const char *inp_buffer, int bufsize)
 {
@@ -58,8 +80,7 @@ void Segmenter::parse_ts_packets(const char *inp_buffer, int bufsize)
     input_ts_stream.parse_bytestream();
 
     create_index_table();
-
-    hls_playlist->update_header();
+    take_decisions();
 
     ts_packet_count += input_ts_stream.get_num_packets();
     byte_offset += bufsize;

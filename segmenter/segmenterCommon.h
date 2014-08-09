@@ -29,20 +29,22 @@
 #include <m3u8/Playlist.h>
 
 class ConfigParams;
+struct variant_stream_info;
+class VariantPlaylist;
 class PlaylistInterface;
 class IFramePlaylist;
 class MasterPlaylist;
 class MediaPlaylist;
-struct variant_stream_info;
+class HlsPlaylistGenerator;
 class IFrameIndex;
 class Segmenter;
-class HlsPlaylistGenerator;
 
 #include "ConfigParams.h"
 #include "PlaylistInterface.h"
 #include "MasterPlaylist.h"
 #include "IFramePlaylist.h"
 #include "MediaPlaylist.h"
+#include "VariantPlaylist.h"
 #include "HlsPlaylistGenerator.h"
 #include "IFrameIndex.h"
 #include "Segmenter.h"

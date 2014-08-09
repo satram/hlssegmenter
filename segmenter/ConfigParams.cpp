@@ -16,9 +16,6 @@ ConfigParams::~ConfigParams()
 	for(auto it = variant_streams.begin(), ite = variant_streams.end(); it != ite; it++)
 	{
 		variant_streams.erase(it);
-		delete (it->mediaUrl);
-		delete (it->iframeUrl);
-		break;
 	}
 }
 
@@ -34,8 +31,6 @@ void ConfigParams::remove_variant(std::string id)
 		if(it->id == id)
 		{
 			variant_streams.erase(it);
-			delete (it->mediaUrl);
-			delete (it->iframeUrl);
 			break;
 		}
 	}

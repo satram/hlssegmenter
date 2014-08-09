@@ -13,6 +13,9 @@ HlsPlaylistGenerator::HlsPlaylistGenerator() {
 
 HlsPlaylistGenerator::~HlsPlaylistGenerator()
 {
+	if(master)
+		delete master;
+
 }
 
 void HlsPlaylistGenerator::generate_header(ConfigParams & config)
@@ -21,33 +24,19 @@ void HlsPlaylistGenerator::generate_header(ConfigParams & config)
 	master->publish_playlist();
 	for(auto it = config.variant_streams.begin(), ite = config.variant_streams.end(); it != ite; it++)
 	{
-		//set the names based on global config
-		it->transcoded_output_url = config.web_server_url + "/" + it->id + "/";
-		it->transcoded_output_path = config.output_folder + "/" + it->id + "/";
-		it->transcoded_output_filename = "transcoded_output.ts"; //TODO change to acceptable name
-		it->media_playlist_filename = "media.m3u8";		//TODO change to acceptable name
-		it->iframe_playlist_filename = "iframe.m3u8";	//TODO change to acceptable name
-
-		//allocate media playlist memory
-		it->mediaUrl = new MediaPlaylist();
-		it->mediaUrl->add_header(*it);
-		it->mediaUrl->add_header(config);
-		it->mediaUrl->publish_playlist(); //TODO - only for testing, this call happens somewhere else
-		if(it->generate_iframe_url)
-		{
-			//allocate iframe playlist memory
-			it->iframeUrl = new IFramePlaylist();
-			it->iframeUrl->add_header(*it);
-			it->iframeUrl->add_header(config);
-			it->iframeUrl->publish_playlist(); //TODO - only for testing, this call happens somewhere else
-		}
+		VariantPlaylist *var = new VariantPlaylist(config, *it);
+		variants.push_back(var);
+		var->publish_playlist();
 	}
 }
 
-void HlsPlaylistGenerator::update_header()
+void HlsPlaylistGenerator::update_media(IFrameIndex *index)
 {
 }
 
+void HlsPlaylistGenerator::update_iframe(IFrameIndex *index)
+{
+}
 
 
 

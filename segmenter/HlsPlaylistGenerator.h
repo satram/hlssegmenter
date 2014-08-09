@@ -10,15 +10,19 @@
 
 #include "segmenterCommon.h"
 
+
 class HlsPlaylistGenerator {
+
 	MasterPlaylist *master;
+	std::list<VariantPlaylist *> variants;
 
 public:
 	HlsPlaylistGenerator();
 	virtual ~HlsPlaylistGenerator();
 
 	void generate_header(ConfigParams &config);
-	void update_header();
+	void update_media(IFrameIndex *index);
+	void update_iframe(IFrameIndex *index);
 };
 
 #endif /* HLSPLAYLISTGENERATOR_H_ */
