@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 	config.playlist_type = event;
 	config.segment_duration = 3.0;
 	config.web_server_url = "http://192.168.1.10:8081/hlschunks/";
-	config.output_folder = "/tmp/hlschunks/";
+	config.output_folder = "hlschunks/";
 
 	variant_stream_info var1;
 	var1.id = "quality1";
