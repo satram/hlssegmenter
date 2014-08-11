@@ -30,19 +30,21 @@ void IFrameIndex::update(int count, long long timestamp, long long byte_offset)
 		flags.idr_size_calculated = true;
 	}
 	duration_from_last_idr += timestamp;
+	duration_from_chunk_start += timestamp;
 }
 
 void IFrameIndex::finalize(int count, long long timestamp, long long byte_offset)
 {
 	duration_from_last_idr += timestamp;
 	flags.update_iframe_playlist.first = true;
+	duration_from_chunk_start += timestamp;
 }
 
 void IFrameIndex::start_chunk()
 {
-	flags.chunk_start = true;
+	duration_from_chunk_start = duration_from_last_idr;
 }
-void IFrameIndex::finalize_chunk(int count, long long timestamp, long long byte_offset)
+void IFrameIndex::finalize_chunk()
 {
 	flags.update_media_playlist.first = true;
 }

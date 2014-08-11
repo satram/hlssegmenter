@@ -13,11 +13,12 @@ Segmenter::Segmenter(ConfigParams &config)
 	hls_playlist->generate_header(config);
 	ts_packet_count = 0;
 	byte_offset = 0;
+	segment_duration = config.segment_duration;
 }
 
 Segmenter::~Segmenter()
 {
-	for(auto it = index.begin(), ite = index.end(); it != ite; it++)
+	for(auto it = iframe_index.begin(), ite = iframe_index.end(); it != ite; it++)
 		delete (*it);
 
 	if(hls_playlist)
@@ -38,16 +39,51 @@ void Segmenter::create_index_table()
             {
                 if((*it)->slice_type[i].first == idr)
                 {
-                	IFrameIndex * last_iframe = index.back();
-                	if(last_iframe != 0)
+                	IFrameIndex * last_iframe = 0;
+
+                	if(iframe_index.size() > 0)
                 	{
-                		last_iframe->finalize(accum_pktcount, timestamp , accum_byteoffset);
+                    	last_iframe = iframe_index.back();
+
+                    	//finalize iframe entry
+                    	if(last_iframe != 0)
+                    	{
+                    		last_iframe->finalize(accum_pktcount, timestamp , accum_byteoffset);
+                        	//check and finalize chunk entry
+                        	if(last_iframe->duration_from_chunk_start > segment_duration)
+                        	{
+                        		for(int i = iframe_index.size() - 1; i > 0; i--)
+                        		{
+                        			if(iframe_index[i] == last_iframe && (i > 0))
+                        			{
+                                		IFrameIndex *penultimate_iframe = iframe_index[i-1];
+                                		//finalize chunk on penultimate iframe
+                                		if(penultimate_iframe != 0)
+                                		{
+                                			penultimate_iframe->finalize_chunk();
+            								//start the chunk on last iframe
+            								last_iframe->start_chunk();
+                                		}
+
+                        			}
+                        		}
+                        	}
+                    	}
                 	}
-                    index.push_back(new IFrameIndex(accum_pktcount, timestamp , accum_byteoffset));
+
+                	//add new IDR entry
+                    iframe_index.push_back(new IFrameIndex(accum_pktcount, timestamp , accum_byteoffset));
+
+                    //start the chunk on the very first iframe index
+                    if(last_iframe == 0)
+                    {
+                    	last_iframe = iframe_index.back();
+                    	last_iframe->start_chunk();
+                    }
                 }
                 else if ((*it)->slice_type[i].first == non_idr)
                 {
-                	IFrameIndex * last_iframe = index.back();
+                	IFrameIndex * last_iframe = iframe_index.back();
                 	last_iframe->update(accum_pktcount, timestamp , accum_byteoffset);
                 }
             }
@@ -57,17 +93,18 @@ void Segmenter::create_index_table()
 
 void Segmenter::update_playlists()
 {
-	for(auto it = index.begin(), ite = index.end();it != ite;it++)
+	for(unsigned int i = 0; i < iframe_index.size(); i++)
 	{
-		if((*it)->flags.update_media_playlist.first && !(*it)->flags.update_media_playlist.second)
+		IFrameIndex * curr = iframe_index[i];
+		if(curr->flags.update_media_playlist.first && !curr->flags.update_media_playlist.second)
 		{
-			hls_playlist->update_media(*it);
-			(*it)->flags.update_media_playlist.second = true;
+			hls_playlist->update_media(curr);
+			curr->flags.update_media_playlist.second = true;
 		}
-		if((*it)->flags.update_iframe_playlist.first && !(*it)->flags.update_iframe_playlist.second)
+		if(curr->flags.update_iframe_playlist.first && !curr->flags.update_iframe_playlist.second)
 		{
-			hls_playlist->update_iframe(*it);
-			(*it)->flags.update_iframe_playlist.second = true;
+			hls_playlist->update_iframe(curr);
+			curr->flags.update_iframe_playlist.second = true;
 		}
 	}
 }
