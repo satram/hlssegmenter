@@ -34,7 +34,7 @@ void Segmenter::create_index_table()
         	int accum_pktcount = ts_packet_count + (*it)->pkt_count;
         	long long accum_byteoffset = (*it)->byte_offset + byte_offset;
         	long long timestamp = (*it)->dts;
-            for(int i = 0;i < (*it)->detected_slice_type_count;i++)
+            for(int i = 0; i < (*it)->detected_slice_type_count;i++)
             {
                 if((*it)->slice_type[i].first == idr)
                 {

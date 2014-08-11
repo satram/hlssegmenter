@@ -30,7 +30,9 @@ void MediaPlaylist::add_node(IFrameIndex *index, VariantPlaylist *variant_playli
 	std::ostringstream oss;
 	oss << "node-" << index->total_pkt_count;
 	Section node(oss.str());
-	node.add_tag("INF", index->duration_from_chunk_start);
+	oss.str("");
+	oss << std::setprecision(2) << index->duration_from_chunk_start;
+	node.add_tag("INF", oss.str());
 	oss.str("");
 	oss << index->chunk_size << "@" << index->total_byte_offset;
 	node.add_tag("BYTERANGE", oss.str());

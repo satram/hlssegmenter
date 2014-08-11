@@ -46,11 +46,13 @@ void VariantPlaylist::publish_playlist()
 void VariantPlaylist::update_media_playlist(IFrameIndex *index)
 {
 	mediaUrl->add_node(index, this);
+	mediaUrl->publish_playlist();
 }
 
 void VariantPlaylist::update_iframe_playlist(IFrameIndex *index)
 {
 	iframeUrl->add_node(index, this);
+	iframeUrl->publish_playlist();
 }
 
 
