@@ -50,7 +50,8 @@ public:
 	void start_chunk();
 	void finalize_chunk(int count, long long timestamp, long long byte_offset);
 	friend class Segmenter;
-	friend class VariantPlaylist;
+	friend class MediaPlaylist;
+	friend class IFramePlaylist;
 };
 
 #endif /* IFRAMEINDEX_H_ */

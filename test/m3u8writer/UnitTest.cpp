@@ -196,7 +196,7 @@ void UnitTest::add_node_to_playlist(int sequencenum, double duration, Playlist &
 	node.add_tag("INF", duration);
 	node.set_path("http://media.example.com/");
 	oss << ".ts";
-	node.set_locator(oss.str());
+	node.set_locator(oss.str().c_str());
 	sample_playlist.add_section(node);
 	return;
 }

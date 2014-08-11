@@ -33,10 +33,16 @@ void HlsPlaylistGenerator::generate_header(ConfigParams & config)
 
 void HlsPlaylistGenerator::update_media(IFrameIndex *index)
 {
+	//TODO make this call go to corresponding variant
+	VariantPlaylist * it = variants.back();
+	it->update_media_playlist(index);
 }
 
 void HlsPlaylistGenerator::update_iframe(IFrameIndex *index)
 {
+	//TODO make this call go to corresponding variant
+	VariantPlaylist * it = variants.back();
+	it->update_iframe_playlist(index);
 }
 
 

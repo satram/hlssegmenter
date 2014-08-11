@@ -28,8 +28,18 @@ void IFramePlaylist::publish_playlist()
 
 
 
-void IFramePlaylist::add_node()
+void IFramePlaylist::add_node(IFrameIndex *index, VariantPlaylist *variant_playlist)
 {
+	std::ostringstream oss;
+	oss << "node-" << index->total_pkt_count;
+	Section node(oss.str());
+	node.add_tag("INF", index->duration_from_last_idr);
+	oss.str("");
+	oss << index->idr_size << "@" << index->total_byte_offset;
+	node.add_tag("BYTERANGE", oss.str());
+	node.set_path(variant_playlist->transcoded_output_url);
+	node.set_locator(variant_playlist->transcoded_output_filename);
+	playlist.add_section(node);
 }
 
 

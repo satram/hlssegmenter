@@ -51,16 +51,21 @@ public:
 		oss << "\n";
 		return oss.str();
 	};
-	void set_path(const char *p){
+	void set_path(const char *p)
+	{
 		path = std::string(p);
+	};
+	void set_path(std::string &p)
+	{
+		path = p;
 	};
 	void set_locator(const char *l)
 	{
 		locator = std::string(l);
 	};
-	void set_locator(std::string l)
+	void set_locator(std::string& l)
 	{
-		locator =l;
+		locator = l;
 	};
 	void add_tag(Tag &t){
 		tags.push_back(t);

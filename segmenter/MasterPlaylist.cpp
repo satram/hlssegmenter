@@ -77,7 +77,7 @@ void MasterPlaylist::publish_playlist()
 
 
 
-void MasterPlaylist::add_node()
+void MasterPlaylist::add_node(IFrameIndex *index, VariantPlaylist *variant_playlist)
 {
 }
 

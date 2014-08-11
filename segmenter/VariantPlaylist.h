@@ -26,6 +26,9 @@ public:
 	void publish_playlist();
 	void update_iframe_playlist(IFrameIndex *index);
 	void update_media_playlist(IFrameIndex *index);
+	friend class MediaPlaylist;
+	friend class IFramePlaylist;
+
 };
 
 #endif /* VARIANTPLAYLIST_H_ */
