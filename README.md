@@ -34,6 +34,11 @@ Bitstream.cpp - optimization - extend stream buf class to support move construct
 PES packet - optimization - copying of 100 bytes to PES data byte - improve this design 
 
 
+file writing
+-------------
+class at segmenter level, 
+maintains context for all variants, context --> filename, path, byteoffset
+
 
 documents
 ----------
