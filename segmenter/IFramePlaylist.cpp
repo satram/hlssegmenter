@@ -16,14 +16,27 @@ IFramePlaylist::~IFramePlaylist() {
 	// TODO Auto-generated destructor stub
 }
 
+void IFramePlaylist::set_url(std::string &path, std::string &filename)
+{
+	playlist_path = path;
+	playlist_name = filename;
+}
+
 void IFramePlaylist::add_header(ConfigParams & config)
 {
 }
 
 void IFramePlaylist::publish_playlist()
 {
-	std::cout << "-----------------IFrames playlist-----------------" << std::endl;
-	std::cout << playlist.marshall();
+//	std::cout << "-----------------IFrames playlist-----------------" << std::endl;
+//	std::cout << playlist.marshall();
+	std::ofstream file;
+	file.open(playlist_path + playlist_name, std::ofstream::out);
+	if(file.is_open())
+	{
+		file << playlist.marshall();
+		file.close();
+	}
 }
 
 

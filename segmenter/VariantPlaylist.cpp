@@ -7,6 +7,7 @@
 
 #include "VariantPlaylist.h"
 
+
 VariantPlaylist::VariantPlaylist(ConfigParams &config, variant_stream_info &var)
 {
 	transcoded_output_filename = "transcoded_output.ts";
@@ -17,14 +18,12 @@ VariantPlaylist::VariantPlaylist(ConfigParams &config, variant_stream_info &var)
 	transcoded_output_path = config.output_folder + "/" + var.id + "/";
 
 	mediaUrl = new MediaPlaylist();
-	mediaUrl->add_header(var);
-	mediaUrl->add_header(config);
-	if(var.generate_iframe_url)
-	{
-		iframeUrl = new IFramePlaylist();
-		iframeUrl->add_header(var);
-		iframeUrl->add_header(config);
-	}
+	mediaUrl->set_url(transcoded_output_path, media_playlist_filename);
+    if(var.generate_iframe_url)
+    {
+        iframeUrl = new IFramePlaylist();
+        iframeUrl->set_url(transcoded_output_path, iframe_playlist_filename);
+    }
 }
 
 VariantPlaylist::~VariantPlaylist()
@@ -34,6 +33,17 @@ VariantPlaylist::~VariantPlaylist()
 	if(iframeUrl)
 		delete iframeUrl;
 }
+
+void VariantPlaylist::add_header(ConfigParams & config, variant_stream_info & var)
+{
+    mediaUrl->add_header(var);
+    mediaUrl->add_header(config);
+    if(iframeUrl){
+        iframeUrl->add_header(var);
+        iframeUrl->add_header(config);
+    }
+}
+
 
 void VariantPlaylist::publish_playlist()
 {

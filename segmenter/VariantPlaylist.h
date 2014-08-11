@@ -11,21 +11,20 @@
 #include "segmenterCommon.h"
 
 class VariantPlaylist {
-	//updated based on global config params
-	std::string transcoded_output_url;
-	std::string transcoded_output_path;
-	std::string transcoded_output_filename;
-	std::string media_playlist_filename;
-	std::string iframe_playlist_filename;
-
-	MediaPlaylist *mediaUrl;
-	IFramePlaylist *iframeUrl;
+    std::string transcoded_output_url;
+    std::string transcoded_output_path;
+    std::string transcoded_output_filename;
+    std::string media_playlist_filename;
+    std::string iframe_playlist_filename;
+    MediaPlaylist *mediaUrl;
+    IFramePlaylist *iframeUrl;
 public:
-	VariantPlaylist(ConfigParams &config, variant_stream_info &var);
-	virtual ~VariantPlaylist();
-	void publish_playlist();
-	void update_iframe_playlist(IFrameIndex *index);
-	void update_media_playlist(IFrameIndex *index);
+    VariantPlaylist(ConfigParams & config, variant_stream_info & var);
+    virtual ~VariantPlaylist();
+    void publish_playlist();
+    void update_iframe_playlist(IFrameIndex *index);
+    void update_media_playlist(IFrameIndex *index);
+    void add_header(ConfigParams & config, variant_stream_info & var);
 	friend class MediaPlaylist;
 	friend class IFramePlaylist;
 

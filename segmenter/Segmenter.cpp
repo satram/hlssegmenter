@@ -9,8 +9,9 @@
 
 Segmenter::Segmenter(ConfigParams &config)
 {
-	hls_playlist = new HlsPlaylistGenerator();
+	hls_playlist = new HlsPlaylistGenerator(config);
 	hls_playlist->generate_header(config);
+	hls_playlist->publish_playlist();
 	ts_packet_count = 0;
 	byte_offset = 0;
 	segment_duration = config.segment_duration;
@@ -100,11 +101,13 @@ void Segmenter::update_playlists()
 		{
 			hls_playlist->update_media(curr);
 			curr->flags.update_media_playlist.second = true;
+			hls_playlist->publish_playlist();
 		}
 		if(curr->flags.update_iframe_playlist.first && !curr->flags.update_iframe_playlist.second)
 		{
 			hls_playlist->update_iframe(curr);
 			curr->flags.update_iframe_playlist.second = true;
+			hls_playlist->publish_playlist();
 		}
 	}
 }

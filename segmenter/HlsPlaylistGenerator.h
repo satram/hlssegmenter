@@ -17,12 +17,14 @@ class HlsPlaylistGenerator {
 	std::list<VariantPlaylist *> variants;
 
 public:
-	HlsPlaylistGenerator();
+	HlsPlaylistGenerator(ConfigParams &config);
 	virtual ~HlsPlaylistGenerator();
 
 	void generate_header(ConfigParams &config);
 	void update_media(IFrameIndex *index);
 	void update_iframe(IFrameIndex *index);
+
+	void publish_playlist();
 };
 
 #endif /* HLSPLAYLISTGENERATOR_H_ */

@@ -14,6 +14,7 @@ class PlaylistInterface {
 public:
 //	PlaylistInterface(){};
 //	virtual ~PlaylistInterface();
+	virtual void set_url(std::string &path, std::string &filename);
 	virtual void add_header(ConfigParams & config);
 	virtual void add_header(variant_stream_info &stream_info);
 	virtual void add_node(IFrameIndex *index, VariantPlaylist *variant_playlist);
@@ -22,6 +23,7 @@ public:
 	virtual void add_footer();
 };
 
+inline void set_path_filename(std::string &path, std::string &filename);
 inline void PlaylistInterface::add_header(ConfigParams & config){}
 inline void PlaylistInterface::add_header(variant_stream_info &stream_info){}
 inline void PlaylistInterface::add_node(IFrameIndex *index, VariantPlaylist *variant_playlist){}

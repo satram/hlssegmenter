@@ -7,27 +7,33 @@
 
 #include "HlsPlaylistGenerator.h"
 
-HlsPlaylistGenerator::HlsPlaylistGenerator()
+HlsPlaylistGenerator::HlsPlaylistGenerator(ConfigParams &config)
 {
 	master = new MasterPlaylist();
+	std::string master_playlistname = "master.m3u8";
+	master->set_url(config.output_folder, master_playlistname);
+	for(auto it = config.variant_streams.begin(), ite = config.variant_streams.end(); it != ite; it++)
+	{
+		VariantPlaylist *var = new VariantPlaylist(config, *it);
+		variants.push_back(var);
+	}
 }
 
 HlsPlaylistGenerator::~HlsPlaylistGenerator()
 {
 	if(master)
 		delete master;
-
+	for(auto it = variants.begin(), ite = variants.end(); it != ite; it++)
+		delete (*it);
 }
 
 void HlsPlaylistGenerator::generate_header(ConfigParams & config)
 {
 	master->add_header(config);
-	master->publish_playlist();
-	for(auto it = config.variant_streams.begin(), ite = config.variant_streams.end(); it != ite; it++)
+	auto var_stream_info = config.variant_streams.begin();
+	for(auto it = variants.begin(), ite = variants.end(); it != ite; it++, var_stream_info++)
 	{
-		VariantPlaylist *var = new VariantPlaylist(config, *it);
-		variants.push_back(var);
-		var->publish_playlist();
+		(*it)->add_header(config, *var_stream_info);
 	}
 }
 
@@ -45,5 +51,13 @@ void HlsPlaylistGenerator::update_iframe(IFrameIndex *index)
 	it->update_iframe_playlist(index);
 }
 
+void HlsPlaylistGenerator::publish_playlist()
+{
+	master->publish_playlist();
+	for(auto it = variants.begin(), ite = variants.end(); it != ite; it++)
+	{
+		(*it)->publish_playlist();
+	}
+}
 
 
