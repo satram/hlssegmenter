@@ -25,7 +25,7 @@ iframe playlist - remove node, update section, footer
 mediaplaylist - support for live playlist
 iframe playlist - support for live playlist
 master playlist - remove section, remove node and update section
-
+master playlist - config reading - support for multiple codecs, profiles, levels
 
 
 tsparser-cpp
@@ -37,7 +37,6 @@ PES packet - optimization - copying of 100 bytes to PES data byte - improve this
 
 documents
 ----------
-update uml diagram of hlssegmenter
 
 
 
@@ -46,3 +45,4 @@ COMPLETED TASKS
 Playlist type:Event is supported 
 media playlist entries are updated OTF from ts packets
 iframe playlist entries are updated OTF from ts packets
+Doc - update uml diagram of hlssegmenter
