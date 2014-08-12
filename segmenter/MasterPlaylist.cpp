@@ -24,7 +24,7 @@ void MasterPlaylist::add_header(ConfigParams & config)
 {
 	Section header("header");
 	header.add_tag("M3U");
-	header.add_tag("VERSION", 3);
+	//header.add_tag("VERSION", 3);
 	playlist.add_section(header);
 
 	for(auto it = config.variant_streams.begin(), ite= config.variant_streams.end(); it != ite; it++)
@@ -58,7 +58,9 @@ void MasterPlaylist::add_header(ConfigParams & config)
 			t.add_property("BANDWIDTH", it->bandwidth/10);
 			t.add_property("RESOLUTION",it->vid.resolution);
 			t.add_property("CODECS",oss.str());
-			t.add_property("URI",config.web_server_url + it->id + "/iframe.m3u8");
+			oss.str("");
+			oss << "\"" << config.web_server_url << "/" << it->id << "/iframe.m3u8\"";
+			t.add_property("URI", oss.str());
 			node.add_tag(t);
 			playlist.add_section(node);
 		}
