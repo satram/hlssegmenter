@@ -66,7 +66,7 @@ void Segmenter::create_index_table()
                                 		IFrameIndex *penultimate_iframe = iframe_index[i-1];
 										penultimate_iframe->finalize_chunk();
 										//start the chunk on last iframe
-										last_iframe->start_chunk(penultimate_iframe);
+										last_iframe->start_chunk();
                         			}
                         		}
                         	}
@@ -80,7 +80,7 @@ void Segmenter::create_index_table()
                     if(last_iframe == 0)
                     {
                     	last_iframe = iframe_index.back();
-                    	last_iframe->start_chunk(0);
+                    	last_iframe->start_chunk();
                     }
                 }
                 else if ((*it)->slice_type[i].first == non_idr)
