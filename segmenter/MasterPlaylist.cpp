@@ -55,8 +55,8 @@ void MasterPlaylist::add_header(ConfigParams & config)
 		{
 			Section node("n1");
 			Tag t("I-FRAME-STREAM-INF");
-			t.add_property("BANDWIDTH", 512000);
-			t.add_property("RESOLUTION","1280x720");
+			t.add_property("BANDWIDTH", it->bandwidth/10);
+			t.add_property("RESOLUTION",it->vid.resolution);
 			t.add_property("CODECS",oss.str());
 			t.add_property("URI",config.web_server_url + it->id + "/iframe.m3u8");
 			node.add_tag(t);

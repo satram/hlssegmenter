@@ -21,7 +21,7 @@ void MediaPlaylist::add_header(variant_stream_info &stream_info)
 {
 	Section header("header");
 	header.add_tag("M3U");
-	header.add_tag("VERSION", 3);
+	header.add_tag("VERSION", 4);
 	header.add_tag("MEDIA-SEQUENCE", 0);
 	playlist.add_section(header);
 }
