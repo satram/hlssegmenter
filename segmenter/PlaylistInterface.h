@@ -23,11 +23,11 @@ public:
 	//virtual ~PlaylistInterface();
 	void set_url(std::string &path, std::string &filename);
 	void publish_playlist();
-	virtual void add_header(ConfigParams & config);
-	virtual void add_header(variant_stream_info &stream_info);
-	virtual void add_node(IFrameIndex *index, VariantPlaylist *variant_playlist);
-	virtual void remove_node();
-	virtual void add_footer();
+	virtual void add_header(ConfigParams & config){throw std::runtime_error("this is not defined in base");};
+	virtual void add_header(variant_stream_info &stream_info){throw std::runtime_error("this is not defined in base");};
+	virtual void add_node(IFrameIndex *index, VariantPlaylist *variant_playlist){throw std::runtime_error("this is not defined in base");};
+	virtual void remove_node(){throw std::runtime_error("this is not defined in base");};
+	virtual void add_footer(){throw std::runtime_error("this is not defined in base");};
 };
 
 

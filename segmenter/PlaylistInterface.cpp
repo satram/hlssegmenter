@@ -15,7 +15,7 @@
 
 void PlaylistInterface::set_url(std::string &path, std::string &filename)
 {
-	std::cout << " seturl " << std::endl;
+	//std::cout << " seturl " << std::endl;
 	playlist_path = path;
 	playlist_name = filename;
 	playlist_url = playlist_path + "/" + playlist_name;
@@ -24,7 +24,7 @@ void PlaylistInterface::set_url(std::string &path, std::string &filename)
 
 void PlaylistInterface::publish_playlist()
 {
-	std::cout << " publishing playlist " << playlist_url << std::endl;
+	//std::cout << " publishing playlist " << playlist_url << std::endl;
 	std::ofstream file;
 	file.open(playlist_url, std::ofstream::out);
 	if(file.is_open())
@@ -36,8 +36,3 @@ void PlaylistInterface::publish_playlist()
 		throw std::runtime_error("Unable to open file");
 }
 
-inline void PlaylistInterface::add_header(ConfigParams & config){}
-inline void PlaylistInterface::add_header(variant_stream_info &stream_info){}
-inline void PlaylistInterface::add_node(IFrameIndex *index, VariantPlaylist *variant_playlist){}
-inline void PlaylistInterface::remove_node(){}
-inline void PlaylistInterface::add_footer(){}
