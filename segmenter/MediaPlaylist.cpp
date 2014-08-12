@@ -31,10 +31,10 @@ void MediaPlaylist::add_node(IFrameIndex *index, VariantPlaylist *variant_playli
 	std::ostringstream oss;
 	oss << "node-" << index->total_pkt_count;
 	Section node(oss.str());
-	double duration = (double)index->duration_from_chunk_start / 1000.0;
+	double duration = (double)index->chunk_duration / 1000.0;
 	node.add_tag("INF", duration);
 	oss.str("");
-	oss << index->chunk_size << "@" << index->total_byte_offset;
+	oss << index->chunk_size << "@" << index->idr_start_offset;
 	node.add_tag("BYTERANGE", oss.str());
 	node.set_path(variant_playlist->transcoded_output_url);
 	node.set_locator(variant_playlist->transcoded_output_filename);

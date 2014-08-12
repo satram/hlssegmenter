@@ -35,7 +35,7 @@ void Segmenter::create_index_table()
         {
         	int accum_pktcount = ts_packet_count + (*it)->pkt_count;
         	long long accum_byteoffset = (*it)->byte_offset + byte_offset;
-        	long long timestamp = (*it)->dts;
+        	long long timestamp = (*it)->duration_dts_ms;
             for(int i = 0; i < (*it)->detected_slice_type_count;i++)
             {
                 if((*it)->slice_type[i].first == idr)
@@ -46,25 +46,22 @@ void Segmenter::create_index_table()
                 	{
                     	last_iframe = iframe_index.back();
 
-                    	//finalize iframe entry
                     	if(last_iframe != 0)
                     	{
+                        	//finalize iframe entry
                     		last_iframe->finalize(accum_pktcount, timestamp , accum_byteoffset);
                         	//check and finalize chunk entry
-                        	if(last_iframe->duration_from_chunk_start > segment_duration)
+                        	if(last_iframe->chunk_duration > segment_duration)
                         	{
                         		for(int i = iframe_index.size() - 1; i > 0; i--)
                         		{
                         			if(iframe_index[i] == last_iframe && (i > 0))
                         			{
-                                		IFrameIndex *penultimate_iframe = iframe_index[i-1];
                                 		//finalize chunk on penultimate iframe
-                                		if(penultimate_iframe != 0)
-                                		{
-                                			penultimate_iframe->finalize_chunk();
-            								//start the chunk on last iframe
-            								last_iframe->start_chunk();
-                                		}
+                                		IFrameIndex *penultimate_iframe = iframe_index[i-1];
+										penultimate_iframe->finalize_chunk();
+										//start the chunk on last iframe
+										last_iframe->start_chunk();
                         			}
                         		}
                         	}
@@ -72,7 +69,7 @@ void Segmenter::create_index_table()
                 	}
 
                 	//add new IDR entry
-                    iframe_index.push_back(new IFrameIndex(accum_pktcount, timestamp , accum_byteoffset));
+                    iframe_index.push_back(new IFrameIndex(accum_pktcount, timestamp , accum_byteoffset, last_iframe));
 
                     //start the chunk on the very first iframe index
                     if(last_iframe == 0)

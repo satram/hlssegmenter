@@ -32,16 +32,19 @@ public:
 class IFrameIndex {
 
 	int total_pkt_count;
-	long long total_byte_offset;
+	long long idr_start_offset;
 	long long dts;
-	int idr_size;
-	int chunk_size;
-	unsigned int duration_from_last_idr;
-	unsigned int duration_from_chunk_start;
+
+	long long idr_size;
+	unsigned int idr_duration;
+
+	long long chunk_start_offset;
+	long long chunk_size;
+	unsigned int chunk_duration;
 
 	decision_flags flags;
 public:
-	IFrameIndex(int count, long long timestamp, long long byte_offset);
+	IFrameIndex(int count, long long timestamp, long long byte_offset, IFrameIndex *prev);
 	virtual ~IFrameIndex();
 	void update(int count, long long timestamp, long long byte_offset);
 	void finalize(int count, long long timestamp, long long byte_offset);
