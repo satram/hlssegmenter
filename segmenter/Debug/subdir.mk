@@ -10,6 +10,7 @@ CPP_SRCS += \
 ../IFramePlaylist.cpp \
 ../MasterPlaylist.cpp \
 ../MediaPlaylist.cpp \
+../PlaylistInterface.cpp \
 ../Segmenter.cpp \
 ../VariantPlaylist.cpp 
 
@@ -20,6 +21,7 @@ OBJS += \
 ./IFramePlaylist.o \
 ./MasterPlaylist.o \
 ./MediaPlaylist.o \
+./PlaylistInterface.o \
 ./Segmenter.o \
 ./VariantPlaylist.o 
 
@@ -30,6 +32,7 @@ CPP_DEPS += \
 ./IFramePlaylist.d \
 ./MasterPlaylist.d \
 ./MediaPlaylist.d \
+./PlaylistInterface.d \
 ./Segmenter.d \
 ./VariantPlaylist.d 
 

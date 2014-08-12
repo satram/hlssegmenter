@@ -11,24 +11,24 @@
 #include "segmenterCommon.h"
 
 class PlaylistInterface {
+protected:
+	std::string playlist_path;
+	std::string playlist_name;
+	std::string playlist_url;
+
+	Playlist playlist;
+
 public:
-//	PlaylistInterface(){};
-//	virtual ~PlaylistInterface();
-	virtual void set_url(std::string &path, std::string &filename);
+	//PlaylistInterface();
+	//virtual ~PlaylistInterface();
+	void set_url(std::string &path, std::string &filename);
+	void publish_playlist();
 	virtual void add_header(ConfigParams & config);
 	virtual void add_header(variant_stream_info &stream_info);
 	virtual void add_node(IFrameIndex *index, VariantPlaylist *variant_playlist);
 	virtual void remove_node();
-	virtual void publish_playlist();
 	virtual void add_footer();
 };
 
-inline void set_path_filename(std::string &path, std::string &filename);
-inline void PlaylistInterface::add_header(ConfigParams & config){}
-inline void PlaylistInterface::add_header(variant_stream_info &stream_info){}
-inline void PlaylistInterface::add_node(IFrameIndex *index, VariantPlaylist *variant_playlist){}
-inline void PlaylistInterface::remove_node(){}
-inline void PlaylistInterface::publish_playlist(){}
-inline void PlaylistInterface::add_footer(){}
 
 #endif /* PLAYLISTINTERFACE_H_ */

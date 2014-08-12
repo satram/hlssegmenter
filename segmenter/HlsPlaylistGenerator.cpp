@@ -6,6 +6,7 @@
  */
 
 #include "HlsPlaylistGenerator.h"
+#include "MasterPlaylist.h"
 
 HlsPlaylistGenerator::HlsPlaylistGenerator(ConfigParams &config)
 {

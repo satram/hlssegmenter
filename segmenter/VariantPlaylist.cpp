@@ -6,7 +6,8 @@
  */
 
 #include "VariantPlaylist.h"
-
+#include "MediaPlaylist.h"
+#include "IFramePlaylist.h"
 
 VariantPlaylist::VariantPlaylist(ConfigParams &config, variant_stream_info &var)
 {

@@ -16,11 +16,6 @@ MediaPlaylist::~MediaPlaylist() {
 	// TODO Auto-generated destructor stub
 }
 
-void MediaPlaylist::set_url(std::string &path, std::string &filename)
-{
-	playlist_path = path;
-	playlist_name = filename;
-}
 
 void MediaPlaylist::add_header(variant_stream_info &stream_info)
 {
@@ -60,19 +55,6 @@ void MediaPlaylist::add_header(ConfigParams & config)
 		header.add_tag("PLAYLIST-TYPE", "VOD");
 	header.add_tag("TARGETDURATION", config.segment_duration);
 	playlist.modify_section(header);
-}
-
-void MediaPlaylist::publish_playlist()
-{
-	//std::cout << "-----------------Media playlist-----------------" << std::endl;
-	//std::cout << playlist.marshall();
-	std::ofstream file;
-	file.open(playlist_path + playlist_name, std::ofstream::out);
-	if(file.is_open())
-	{
-		file << playlist.marshall();
-		file.close();
-	}
 }
 
 void MediaPlaylist::add_footer()

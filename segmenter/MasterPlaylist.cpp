@@ -20,12 +20,6 @@ void MasterPlaylist::remove_node()
 {
 }
 
-void MasterPlaylist::set_url(std::string &path, std::string &filename)
-{
-	playlist_path = path;
-	playlist_name = filename;
-}
-
 void MasterPlaylist::add_header(ConfigParams & config)
 {
 	Section header("header");
@@ -70,22 +64,6 @@ void MasterPlaylist::add_header(ConfigParams & config)
 		}
 	}
 }
-
-
-
-void MasterPlaylist::publish_playlist()
-{
-//	std::cout << "-----------------Master playlist-----------------" << std::endl;
-//	std::cout << playlist.marshall();
-	std::ofstream file;
-	file.open(playlist_path + playlist_name, std::ofstream::out);
-	if(file.is_open())
-	{
-		file << playlist.marshall();
-		file.close();
-	}
-}
-
 
 
 void MasterPlaylist::add_node(IFrameIndex *index, VariantPlaylist *variant_playlist)

@@ -41,9 +41,6 @@ class Segmenter;
 
 #include "ConfigParams.h"
 #include "PlaylistInterface.h"
-#include "MasterPlaylist.h"
-#include "IFramePlaylist.h"
-#include "MediaPlaylist.h"
 #include "VariantPlaylist.h"
 #include "HlsPlaylistGenerator.h"
 #include "IFrameIndex.h"
