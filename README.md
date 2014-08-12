@@ -17,7 +17,6 @@ partial memory buffer input, 1 quality, publish media/iframe playlist as LIVE
 
 hlssegmenter
 -------------
-playlist - write to a file and check it is growing
 segmenter - handle eos, update playlist accordingly
 Segmenter- make segmenter aware of multiple quality variants streams flowing through it. currently it is tied to one bitstream.
 mediaplaylist - remove_node, update_section, add footer
@@ -51,3 +50,4 @@ Playlist type:Event is supported
 media playlist entries are updated OTF from ts packets
 iframe playlist entries are updated OTF from ts packets
 Doc - update uml diagram of hlssegmenter
+playlist generation - write to a file and check it is growing

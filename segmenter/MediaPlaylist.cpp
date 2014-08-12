@@ -31,9 +31,8 @@ void MediaPlaylist::add_node(IFrameIndex *index, VariantPlaylist *variant_playli
 	std::ostringstream oss;
 	oss << "node-" << index->total_pkt_count;
 	Section node(oss.str());
-	oss.str("");
-	oss << std::setprecision(2) << index->duration_from_chunk_start;
-	node.add_tag("INF", oss.str());
+	double duration = (double)index->duration_from_chunk_start / 1000.0;
+	node.add_tag("INF", duration);
 	oss.str("");
 	oss << index->chunk_size << "@" << index->total_byte_offset;
 	node.add_tag("BYTERANGE", oss.str());
@@ -53,7 +52,8 @@ void MediaPlaylist::add_header(ConfigParams & config)
 		header.add_tag("PLAYLIST-TYPE", "EVENT");
 	else if(config.playlist_type == vod)
 		header.add_tag("PLAYLIST-TYPE", "VOD");
-	header.add_tag("TARGETDURATION", config.segment_duration);
+	double duration = (double)config.segment_duration_ms / 1000.0;
+	header.add_tag("TARGETDURATION", duration);
 	playlist.modify_section(header);
 }
 

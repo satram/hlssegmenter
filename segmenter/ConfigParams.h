@@ -51,7 +51,7 @@ public:
 	std::string web_server_url;
 	std::string output_folder;
 	hls_playlist_type playlist_type;
-	double segment_duration;
+	unsigned int segment_duration_ms;
 	int sliding_window_duration;
 
 	ConfigParams();

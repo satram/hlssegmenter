@@ -36,8 +36,8 @@ class IFrameIndex {
 	long long dts;
 	int idr_size;
 	int chunk_size;
-	double duration_from_last_idr;
-	double duration_from_chunk_start;
+	unsigned int duration_from_last_idr;
+	unsigned int duration_from_chunk_start;
 
 	decision_flags flags;
 public:

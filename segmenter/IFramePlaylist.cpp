@@ -26,9 +26,8 @@ void IFramePlaylist::add_node(IFrameIndex *index, VariantPlaylist *variant_playl
 	std::ostringstream oss;
 	oss << "node-" << index->total_pkt_count;
 	Section node(oss.str());
-	oss.str("");
-	oss << std::setprecision(2) << index->duration_from_last_idr;
-	node.add_tag("INF", oss.str());
+	double duration = (double)index->duration_from_last_idr / 1000.0;
+	node.add_tag("INF", duration);
 	oss.str("");
 	oss << index->idr_size << "@" << index->total_byte_offset;
 	node.add_tag("BYTERANGE", oss.str());

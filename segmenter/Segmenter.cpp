@@ -14,7 +14,7 @@ Segmenter::Segmenter(ConfigParams &config)
 	hls_playlist->publish_playlist();
 	ts_packet_count = 0;
 	byte_offset = 0;
-	segment_duration = config.segment_duration;
+	segment_duration = config.segment_duration_ms;
 }
 
 Segmenter::~Segmenter()
@@ -65,7 +65,6 @@ void Segmenter::create_index_table()
             								//start the chunk on last iframe
             								last_iframe->start_chunk();
                                 		}
-
                         			}
                         		}
                         	}

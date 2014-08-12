@@ -38,11 +38,13 @@ void IFrameIndex::finalize(int count, long long timestamp, long long byte_offset
 	duration_from_last_idr += timestamp;
 	flags.update_iframe_playlist.first = true;
 	duration_from_chunk_start += timestamp;
+	chunk_size += idr_size;
 }
 
 void IFrameIndex::start_chunk()
 {
 	duration_from_chunk_start = duration_from_last_idr;
+	chunk_size = idr_size;
 }
 void IFrameIndex::finalize_chunk()
 {
