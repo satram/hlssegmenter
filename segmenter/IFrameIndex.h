@@ -33,7 +33,7 @@ class IFrameIndex {
 
 	int total_pkt_count;
 	long long idr_start_offset;
-	long long dts;
+	int duration;
 
 	long long idr_size;
 	unsigned int idr_duration;
@@ -44,10 +44,10 @@ class IFrameIndex {
 
 	decision_flags flags;
 public:
-	IFrameIndex(int count, long long timestamp, long long byte_offset, IFrameIndex *prev);
+	IFrameIndex(int count, int duration_ms, long long byte_offset, IFrameIndex *prev);
 	virtual ~IFrameIndex();
-	void update(int count, long long timestamp, long long byte_offset);
-	void finalize(int count, long long timestamp, long long byte_offset);
+	void update(int count, int duration_ms, long long byte_offset);
+	void finalize(int count, int duration_ms, long long byte_offset);
 	void start_chunk();
 	void finalize_chunk();
 	friend class Segmenter;

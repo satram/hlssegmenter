@@ -22,6 +22,7 @@ class Segmenter {
     void create_index_table();
     void update_playlists();
     double segment_duration;
+    long long prev_dts;
 
 public:
 	Segmenter(ConfigParams &config);

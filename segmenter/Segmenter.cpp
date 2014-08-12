@@ -15,6 +15,7 @@ Segmenter::Segmenter(ConfigParams &config)
 	ts_packet_count = 0;
 	byte_offset = 0;
 	segment_duration = config.segment_duration_ms;
+	prev_dts = 0;
 }
 
 Segmenter::~Segmenter()
@@ -35,7 +36,11 @@ void Segmenter::create_index_table()
         {
         	int accum_pktcount = ts_packet_count + (*it)->pkt_count;
         	long long accum_byteoffset = (*it)->byte_offset + byte_offset;
-        	long long timestamp = (*it)->duration_dts_ms;
+        	int duration_ms = ((*it)->dts - prev_dts)/TS_TIMESCALE_MILLISEC;
+        	if(prev_dts == 0)
+        		duration_ms = 0;
+        	prev_dts = (*it)->dts;
+        	//std::cout << duration_ms << std::endl;
             for(int i = 0; i < (*it)->detected_slice_type_count;i++)
             {
                 if((*it)->slice_type[i].first == idr)
@@ -49,7 +54,7 @@ void Segmenter::create_index_table()
                     	if(last_iframe != 0)
                     	{
                         	//finalize iframe entry
-                    		last_iframe->finalize(accum_pktcount, timestamp , accum_byteoffset);
+                    		last_iframe->finalize(accum_pktcount, duration_ms , accum_byteoffset);
                         	//check and finalize chunk entry
                         	if(last_iframe->chunk_duration > segment_duration)
                         	{
@@ -69,7 +74,7 @@ void Segmenter::create_index_table()
                 	}
 
                 	//add new IDR entry
-                    iframe_index.push_back(new IFrameIndex(accum_pktcount, timestamp , accum_byteoffset, last_iframe));
+                    iframe_index.push_back(new IFrameIndex(accum_pktcount, duration_ms , accum_byteoffset, last_iframe));
 
                     //start the chunk on the very first iframe index
                     if(last_iframe == 0)
@@ -81,7 +86,7 @@ void Segmenter::create_index_table()
                 else if ((*it)->slice_type[i].first == non_idr)
                 {
                 	IFrameIndex * last_iframe = iframe_index.back();
-                	last_iframe->update(accum_pktcount, timestamp , accum_byteoffset);
+                	last_iframe->update(accum_pktcount, duration_ms , accum_byteoffset);
                 }
             }
         }
