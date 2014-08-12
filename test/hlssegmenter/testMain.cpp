@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
         	 * both segmentation and playlist generation
         	 * happens inside this class
         	 */
-        	hls_segmenter.parse_ts_packets(inp_buffer, INP_BUF_SIZE);
+        	hls_segmenter.parse_ts_packets(inp_buffer, infile.gcount());
         }
         infile.close();
     }

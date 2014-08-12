@@ -61,4 +61,8 @@ void HlsPlaylistGenerator::publish_playlist()
 	}
 }
 
-
+void HlsPlaylistGenerator::publish_media(const char *inp_buffer, int bufsize)
+{
+	auto it = variants.back();
+	it->publish_media(inp_buffer, bufsize);
+}

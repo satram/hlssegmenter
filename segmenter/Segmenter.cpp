@@ -122,6 +122,7 @@ void Segmenter::parse_ts_packets(const char *inp_buffer, int bufsize)
 
     create_index_table();
     update_playlists();
+    hls_playlist->publish_media(inp_buffer, bufsize);
 
     ts_packet_count += input_ts_stream.get_num_packets();
     byte_offset += bufsize;

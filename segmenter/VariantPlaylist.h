@@ -18,6 +18,9 @@ class VariantPlaylist {
     std::string iframe_playlist_filename;
     MediaPlaylist *mediaUrl;
     IFramePlaylist *iframeUrl;
+
+    std::ofstream mediafile;
+
 public:
     VariantPlaylist(ConfigParams & config, variant_stream_info & var);
     virtual ~VariantPlaylist();
@@ -25,7 +28,10 @@ public:
     void update_iframe_playlist(IFrameIndex *index);
     void update_media_playlist(IFrameIndex *index);
     void add_header(ConfigParams & config, variant_stream_info & var);
-	friend class MediaPlaylist;
+
+    void publish_media(const char *inp_buffer, int bufsize);
+
+    friend class MediaPlaylist;
 	friend class IFramePlaylist;
 
 };

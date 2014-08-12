@@ -25,6 +25,8 @@ VariantPlaylist::VariantPlaylist(ConfigParams &config, variant_stream_info &var)
         iframeUrl = new IFramePlaylist();
         iframeUrl->set_url(transcoded_output_path, iframe_playlist_filename);
     }
+
+    mediafile.open(transcoded_output_path + transcoded_output_filename, std::ofstream::out);
 }
 
 VariantPlaylist::~VariantPlaylist()
@@ -33,6 +35,8 @@ VariantPlaylist::~VariantPlaylist()
 		delete mediaUrl;
 	if(iframeUrl)
 		delete iframeUrl;
+	if(mediafile.is_open())
+		mediafile.close();
 }
 
 void VariantPlaylist::add_header(ConfigParams & config, variant_stream_info & var)
@@ -67,5 +71,11 @@ void VariantPlaylist::update_iframe_playlist(IFrameIndex *index)
 }
 
 
-
+void VariantPlaylist::publish_media(const char *inp_buffer, int bufsize)
+{
+	if(mediafile.is_open())
+	{
+		mediafile.write(inp_buffer, bufsize);
+	}
+}
 

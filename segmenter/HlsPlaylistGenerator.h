@@ -25,6 +25,7 @@ public:
 	void update_iframe(IFrameIndex *index);
 
 	void publish_playlist();
+	void publish_media(const char *inp_buffer, int bufsize);
 };
 
 #endif /* HLSPLAYLISTGENERATOR_H_ */
