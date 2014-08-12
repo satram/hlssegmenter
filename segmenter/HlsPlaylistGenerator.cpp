@@ -66,3 +66,12 @@ void HlsPlaylistGenerator::publish_media(const char *inp_buffer, int bufsize)
 	auto it = variants.back();
 	it->publish_media(inp_buffer, bufsize);
 }
+
+void HlsPlaylistGenerator::finalize_playlist()
+{
+	master->finalize_playlist();
+	for(auto it = variants.begin(), ite = variants.end(); it != ite; it++)
+	{
+		(*it)->finalize_playlist();
+	}
+}

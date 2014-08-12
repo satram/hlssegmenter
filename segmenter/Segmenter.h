@@ -29,6 +29,7 @@ public:
 	virtual ~Segmenter();
 
 	void parse_ts_packets(const char *inp_buffer, int bufsize);
+	void finalize_playlist();
 };
 
 #endif /* SEGMENTER_H_ */

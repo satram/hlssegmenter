@@ -13,8 +13,6 @@ mediaplaylist - support for live playlist
 
 iframe playlist - support for live playlist
 
-segmenter - handle eos, update playlist accordingly
-
 Segmenter- make segmenter aware of multiple quality variants streams flowing through it. currently it is tied to one bitstream.
 
 mediaplaylist - remove_node, update_section, add footer
@@ -60,6 +58,8 @@ Doc - update uml diagram of hlssegmenter
 playlist generation - write to a file and check it is growing
 
 file writing - maintains context for all variants, context --> filename, path, byteoffset
+
+segmenter - handle eos, update playlist accordingly
 
 
 ----

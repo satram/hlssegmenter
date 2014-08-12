@@ -21,6 +21,7 @@ public:
 	void add_node(IFrameIndex *index, VariantPlaylist *variant_playlist);
 	void remove_node();
 	void add_footer();
+	void finalize_playlist();
 };
 
 #endif /* IFRAMEPLAYLIST_H_ */

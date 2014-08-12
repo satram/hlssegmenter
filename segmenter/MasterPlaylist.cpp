@@ -43,7 +43,7 @@ void MasterPlaylist::add_header(ConfigParams & config)
 		{
 			Section node("n1");
 			Tag t("STREAM-INF");
-			t.add_property("BANDWIDTH", it->bandwidth);
+			t.add_property("BANDWIDTH", it->bandwidth);void finalize_playlist();
 			t.add_property("RESOLUTION",it->vid.resolution);
 			t.add_property("CODECS",oss.str());
 			node.add_tag(t);
@@ -82,6 +82,9 @@ void MasterPlaylist::add_footer()
 {
 }
 
+void MasterPlaylist::finalize_playlist()
+{
 
+}
 
 

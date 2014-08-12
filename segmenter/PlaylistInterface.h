@@ -28,6 +28,7 @@ public:
 	virtual void add_node(IFrameIndex *index, VariantPlaylist *variant_playlist){throw std::runtime_error("this is not defined in base");};
 	virtual void remove_node(){throw std::runtime_error("this is not defined in base");};
 	virtual void add_footer(){throw std::runtime_error("this is not defined in base");};
+	virtual void finalize_playlist(){throw std::runtime_error("this is not defined in base");};
 };
 
 

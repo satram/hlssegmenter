@@ -26,6 +26,7 @@ public:
 
 	void publish_playlist();
 	void publish_media(const char *inp_buffer, int bufsize);
+	void finalize_playlist();
 };
 
 #endif /* HLSPLAYLISTGENERATOR_H_ */

@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 	 */
 	ConfigParams config;
 	config.playlist_type = event;
-	config.segment_duration_ms = 10000;
+	config.segment_duration_ms = 4000;
 	config.web_server_url = "http://10.121.1.63:80/hlschunks/";
 	config.output_folder = "/var/www/html/hlschunks/";
 
@@ -59,6 +59,7 @@ int main(int argc, char *argv[])
         	hls_segmenter.parse_ts_packets(inp_buffer, infile.gcount());
         }
         infile.close();
+        hls_segmenter.finalize_playlist();
     }
     delete inp_buffer;
 

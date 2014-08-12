@@ -61,3 +61,13 @@ void MediaPlaylist::add_footer()
 {
 }
 
+void MediaPlaylist::finalize_playlist()
+{
+	Section header = playlist.get_section("header");
+	header.modify_tag("PLAYLIST-TYPE", "VOD");
+	playlist.modify_section(header);
+
+	Section footer ("footer");
+	footer.add_tag("ENDLIST");
+	playlist.add_section(footer);
+}

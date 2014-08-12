@@ -59,4 +59,11 @@ void IFramePlaylist::remove_node()
 {
 }
 
+void IFramePlaylist::finalize_playlist()
+{
+	Section footer ("footer");
+	footer.add_tag("ENDLIST");
+	playlist.add_section(footer);
+}
+
 

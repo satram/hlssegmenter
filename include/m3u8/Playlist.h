@@ -38,7 +38,7 @@ public:
 			if(it->get_name() == name)
 				return (*it);
 		}
-		throw std::runtime_error("request section not found");
+		throw std::runtime_error("requested section not found");
 	}
 
 	void delete_section(std::string name)

@@ -57,6 +57,12 @@ void VariantPlaylist::publish_playlist()
 		iframeUrl->publish_playlist();
 }
 
+void VariantPlaylist::finalize_playlist()
+{
+	mediaUrl->finalize_playlist();
+	if(iframeUrl)
+		iframeUrl->finalize_playlist();
+}
 
 void VariantPlaylist::update_media_playlist(IFrameIndex *index)
 {

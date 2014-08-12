@@ -132,4 +132,8 @@ void Segmenter::parse_ts_packets(const char *inp_buffer, int bufsize)
     input_ts_stream.close();
 }
 
-
+void Segmenter::finalize_playlist()
+{
+	hls_playlist->finalize_playlist();
+	hls_playlist->publish_playlist();
+}

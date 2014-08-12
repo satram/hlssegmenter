@@ -30,6 +30,7 @@ public:
     void add_header(ConfigParams & config, variant_stream_info & var);
 
     void publish_media(const char *inp_buffer, int bufsize);
+    void finalize_playlist();
 
     friend class MediaPlaylist;
 	friend class IFramePlaylist;
