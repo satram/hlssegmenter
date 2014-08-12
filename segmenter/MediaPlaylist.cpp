@@ -34,7 +34,7 @@ void MediaPlaylist::add_node(IFrameIndex *index, VariantPlaylist *variant_playli
 	double duration = (double)index->chunk_duration / 1000.0;
 	node.add_tag("INF", duration);
 	oss.str("");
-	oss << index->chunk_size << "@" << index->idr_start_offset;
+	oss << index->chunk_size << "@" << index->chunk_start_offset;
 	node.add_tag("BYTERANGE", oss.str());
 	node.set_path(variant_playlist->transcoded_output_url);
 	node.set_locator(variant_playlist->transcoded_output_filename);

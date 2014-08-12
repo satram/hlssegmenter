@@ -48,7 +48,7 @@ public:
 	virtual ~IFrameIndex();
 	void update(int count, int duration_ms, long long byte_offset);
 	void finalize(int count, int duration_ms, long long byte_offset);
-	void start_chunk();
+	void start_chunk(IFrameIndex *prev);
 	void finalize_chunk();
 	friend class Segmenter;
 	friend class MediaPlaylist;
