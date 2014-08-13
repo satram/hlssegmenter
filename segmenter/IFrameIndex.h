@@ -23,7 +23,6 @@ class IFrameIndex {
 
 	long long prev_packet_byte_offset;
 
-	bool idr_size_calculated;
 	std::pair<bool,bool> update_iframe_playlist; //pair of do and done
 
 public:

@@ -19,7 +19,7 @@ ChunkIndex::ChunkIndex() {
 ChunkIndex::ChunkIndex(IFrameIndex *iframe) {
 	update_media_playlist = std::pair<bool,bool>(false, false);
 	chunk_start_offset = iframe->idr_start_offset;
-	chunk_size = iframe->accum_gop_size;
+	chunk_size = 0;
 	chunk_duration = iframe->accum_gop_duration;
 }
 
@@ -31,12 +31,15 @@ bool ChunkIndex::update_chunk(IFrameIndex *iframe)
 {
 	if(chunk_duration + iframe->accum_gop_duration > input_chunk_interval)
 	{
+		chunk_size = iframe->idr_start_offset - chunk_start_offset;
 		update_media_playlist.first = true;
 		return true;
 	}
 	else
 	{
-		chunk_size += iframe->accum_gop_size;
+		if (chunk_start_offset == 0)
+			chunk_start_offset = iframe->idr_start_offset;
+		chunk_size = iframe->idr_start_offset - chunk_start_offset; //TODO chunk size is also summation of accum_gop_size in all IDRs
 		chunk_duration += iframe->accum_gop_duration;
 		return false;
 	}
