@@ -36,6 +36,16 @@ void ConfigParams::remove_variant(std::string id)
 	}
 }
 
-
-
-
+#define PROCESS_VAL(n) case(n): str = #n; break;
+const char *ConfigParams::convert_playlist_enum_to_string(hls_playlist_type type)
+{
+	const char *str;
+	switch(type)
+	{
+		PROCESS_VAL(EVENT)
+		PROCESS_VAL(LIVE)
+		PROCESS_VAL(VOD)
+	}
+	return str;
+}
+#undef PROCESS_VAL

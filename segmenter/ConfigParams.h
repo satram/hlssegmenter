@@ -28,9 +28,9 @@ struct audio_codec_info
 
 enum hls_playlist_type
 {
-	live,
-	event,
-	vod
+	LIVE,
+	EVENT,
+	VOD
 };
 
 struct variant_stream_info
@@ -58,6 +58,7 @@ public:
 	virtual ~ConfigParams();
 	void add_variant(variant_stream_info &var);
 	void remove_variant(std::string id);
+	const char *convert_playlist_enum_to_string(hls_playlist_type type);
 
 	friend class MasterPlaylist;
 	friend class MediaPlaylist;

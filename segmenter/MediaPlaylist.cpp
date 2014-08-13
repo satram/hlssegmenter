@@ -49,10 +49,7 @@ void MediaPlaylist::remove_node()
 void MediaPlaylist::add_header(ConfigParams & config)
 {
 	Section header = playlist.get_section("header");
-	if(config.playlist_type == event)
-		header.add_tag("PLAYLIST-TYPE", "EVENT");
-	else if(config.playlist_type == vod)
-		header.add_tag("PLAYLIST-TYPE", "VOD");
+	header.add_tag("PLAYLIST-TYPE", config.convert_playlist_enum_to_string(config.playlist_type));
 	double duration = (double)config.segment_duration_ms / 1000.0;
 	header.add_tag("TARGETDURATION", duration);
 	playlist.modify_section(header);
