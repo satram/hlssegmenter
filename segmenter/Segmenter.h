@@ -14,6 +14,9 @@
 class Segmenter {
 
 	std::vector<IFrameIndex *> iframe_index;
+	std::vector<ChunkIndex *> chunk_index;
+	ChunkIndex *curr_chunk;
+
 	int ts_packet_count;
 	long long byte_offset;
 
@@ -21,6 +24,7 @@ class Segmenter {
 	HlsPlaylistGenerator* hls_playlist;
     void create_index_table();
     void update_playlists();
+    void update_chunk(IFrameIndex *last_iframe);
     double segment_duration;
     long long prev_dts;
 

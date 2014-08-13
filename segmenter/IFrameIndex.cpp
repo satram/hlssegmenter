@@ -7,27 +7,20 @@
 
 #include "IFrameIndex.h"
 
-IFrameIndex::IFrameIndex(int count, int duration_ms, long long byte_offset, IFrameIndex *prev)
+IFrameIndex::IFrameIndex(int count, int duration_ms, long long byte_offset)
 {
 	//current entry
 	total_pkt_count = count;
-	duration = duration_ms;
 	idr_start_offset = byte_offset;
 
 	//needed for finalize idr entries
 	idr_size = 0;
-	idr_duration = duration_ms;
+	idr_size_calculated = false;
+	update_iframe_playlist = std::pair<bool,bool>(false, false);
 
-	//needed for chunk decision
-	chunk_start_offset = byte_offset;
-	chunk_size = 0;
-	chunk_duration = idr_duration;
-	if(prev != 0)
-	{
-		chunk_start_offset = prev->chunk_start_offset;
-		chunk_duration = prev->chunk_duration;
-		chunk_size = prev->chunk_size;
-	}
+	accum_gop_duration = duration_ms;
+	accum_gop_size = 0;
+	prev_packet_byte_offset = byte_offset;
 }
 
 IFrameIndex::~IFrameIndex()
@@ -37,35 +30,22 @@ IFrameIndex::~IFrameIndex()
 
 void IFrameIndex::update(int count, int duration_ms, long long byte_offset)
 {
-	if(!flags.idr_size_calculated)
+	if(!idr_size_calculated)
 	{
 		idr_size = byte_offset - idr_start_offset;
-		flags.idr_size_calculated = true;
+		idr_size_calculated = true;
 	}
-	idr_duration += duration_ms;
-	chunk_duration += duration_ms;
-	chunk_size = byte_offset - chunk_start_offset;
+
+	accum_gop_duration += duration_ms;
+	accum_gop_size = byte_offset - prev_packet_byte_offset;
+	prev_packet_byte_offset = byte_offset;
 }
 
 void IFrameIndex::finalize(int count, int duration_ms, long long byte_offset)
 {
-	idr_duration += duration_ms;
-	flags.update_iframe_playlist.first = true;
-	chunk_duration += duration_ms;
-	chunk_size = byte_offset - chunk_start_offset;
-//	std::cout << "finalize IDR " << this << " " << idr_duration << " " << chunk_duration << " " << chunk_size << " " << chunk_start_offset  << std::endl;
+	update_iframe_playlist.first = true;
+	accum_gop_duration += duration_ms;
+	accum_gop_size = byte_offset - prev_packet_byte_offset;
+	prev_packet_byte_offset = byte_offset;
 }
 
-void IFrameIndex::start_chunk()
-{
-	//needed for chunk decision
-	chunk_size = 0;
-	chunk_start_offset = idr_start_offset;
-	chunk_duration = idr_duration;
-//	std::cout << "start chunk " << this << " " << idr_duration << " " << chunk_duration << " " << chunk_size << " " << chunk_start_offset << std::endl;
-}
-void IFrameIndex::finalize_chunk()
-{
-	flags.update_media_playlist.first = true;
-//	std::cout << "finalize chunk " << this << " " << idr_duration << " " << chunk_duration << " " << chunk_size << " " << chunk_start_offset << std::endl;
-}

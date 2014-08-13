@@ -4,6 +4,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../ChunkIndex.cpp \
 ../ConfigParams.cpp \
 ../HlsPlaylistGenerator.cpp \
 ../IFrameIndex.cpp \
@@ -15,6 +16,7 @@ CPP_SRCS += \
 ../VariantPlaylist.cpp 
 
 OBJS += \
+./ChunkIndex.o \
 ./ConfigParams.o \
 ./HlsPlaylistGenerator.o \
 ./IFrameIndex.o \
@@ -26,6 +28,7 @@ OBJS += \
 ./VariantPlaylist.o 
 
 CPP_DEPS += \
+./ChunkIndex.d \
 ./ConfigParams.d \
 ./HlsPlaylistGenerator.d \
 ./IFrameIndex.d \

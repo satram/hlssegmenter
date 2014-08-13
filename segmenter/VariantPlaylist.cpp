@@ -64,7 +64,7 @@ void VariantPlaylist::finalize_playlist()
 		iframeUrl->finalize_playlist();
 }
 
-void VariantPlaylist::update_media_playlist(IFrameIndex *index)
+void VariantPlaylist::update_media_playlist(ChunkIndex *index)
 {
 	mediaUrl->add_node(index, this);
 	mediaUrl->publish_playlist();

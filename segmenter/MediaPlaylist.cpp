@@ -26,10 +26,10 @@ void MediaPlaylist::add_header(variant_stream_info &stream_info)
 	playlist.add_section(header);
 }
 
-void MediaPlaylist::add_node(IFrameIndex *index, VariantPlaylist *variant_playlist)
+void MediaPlaylist::add_node(ChunkIndex *index, VariantPlaylist *variant_playlist)
 {
 	std::ostringstream oss;
-	oss << "node-" << index->total_pkt_count;
+	oss << "node-" << index->chunk_duration;
 	Section node(oss.str());
 	double duration = (double)index->chunk_duration / 1000.0;
 	node.add_tag("INF", duration);

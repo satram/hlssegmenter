@@ -26,7 +26,7 @@ public:
     virtual ~VariantPlaylist();
     void publish_playlist();
     void update_iframe_playlist(IFrameIndex *index);
-    void update_media_playlist(IFrameIndex *index);
+    void update_media_playlist(ChunkIndex *index);
     void add_header(ConfigParams & config, variant_stream_info & var);
 
     void publish_media(const char *inp_buffer, int bufsize);

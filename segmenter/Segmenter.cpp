@@ -16,6 +16,11 @@ Segmenter::Segmenter(ConfigParams &config)
 	byte_offset = 0;
 	segment_duration = config.segment_duration_ms;
 	prev_dts = 0;
+
+    curr_chunk = new ChunkIndex();
+    curr_chunk->set_interval(config.segment_duration_ms);
+    chunk_index.push_back(curr_chunk);
+
 }
 
 Segmenter::~Segmenter()
@@ -25,6 +30,15 @@ Segmenter::~Segmenter()
 
 	if(hls_playlist)
 		delete hls_playlist;
+}
+
+void Segmenter::update_chunk(IFrameIndex *last_iframe)
+{
+	bool make_new_chunk = curr_chunk->update_chunk(last_iframe);
+	if(make_new_chunk){
+		curr_chunk = new ChunkIndex(last_iframe);
+		chunk_index.push_back(curr_chunk);
+	}
 }
 
 void Segmenter::create_index_table()
@@ -40,48 +54,20 @@ void Segmenter::create_index_table()
         	if(prev_dts == 0)
         		duration_ms = 0;
         	prev_dts = (*it)->dts;
-        	//std::cout << duration_ms << std::endl;
-            for(int i = 0; i < (*it)->detected_slice_type_count;i++)
+
+        	for(int i = 0; i < (*it)->detected_slice_type_count;i++)
             {
                 if((*it)->slice_type[i].first == idr)
                 {
-                	IFrameIndex * last_iframe = 0;
-
-                	if(iframe_index.size() > 0)
+                	if(iframe_index.size() > 0 && iframe_index.back() != 0)
                 	{
-                    	last_iframe = iframe_index.back();
-
-                    	if(last_iframe != 0)
-                    	{
-                        	//finalize iframe entry
-                    		last_iframe->finalize(accum_pktcount, duration_ms , accum_byteoffset);
-                        	//check and finalize chunk entry
-                        	if(last_iframe->chunk_duration > segment_duration)
-                        	{
-                        		for(int i = iframe_index.size() - 1; i > 0; i--)
-                        		{
-                        			if(iframe_index[i] == last_iframe && (i > 0))
-                        			{
-                                		//finalize chunk on penultimate iframe
-                                		IFrameIndex *penultimate_iframe = iframe_index[i-1];
-										penultimate_iframe->finalize_chunk();
-										//start the chunk on last iframe
-										last_iframe->start_chunk();
-                        			}
-                        		}
-                        	}
-                    	}
+						IFrameIndex * last_iframe = iframe_index.back();
+						last_iframe->finalize(accum_pktcount, duration_ms , accum_byteoffset);
+						update_chunk(last_iframe);
                 	}
-
                 	//add new IDR entry
-                    iframe_index.push_back(new IFrameIndex(accum_pktcount, duration_ms , accum_byteoffset, last_iframe));
+                    iframe_index.push_back(new IFrameIndex(accum_pktcount, duration_ms , accum_byteoffset));
 
-                    //start the chunk on the very first iframe index
-                    if(last_iframe == 0)
-                    {
-                    	last_iframe = iframe_index.back();
-                    	last_iframe->start_chunk();
-                    }
                 }
                 else if ((*it)->slice_type[i].first == non_idr)
                 {
@@ -98,16 +84,21 @@ void Segmenter::update_playlists()
 	for(unsigned int i = 0; i < iframe_index.size(); i++)
 	{
 		IFrameIndex * curr = iframe_index[i];
-		if(curr->flags.update_media_playlist.first && !curr->flags.update_media_playlist.second)
-		{
-			hls_playlist->update_media(curr);
-			curr->flags.update_media_playlist.second = true;
-			hls_playlist->publish_playlist();
-		}
-		if(curr->flags.update_iframe_playlist.first && !curr->flags.update_iframe_playlist.second)
+		if(curr->update_iframe_playlist.first && !curr->update_iframe_playlist.second)
 		{
 			hls_playlist->update_iframe(curr);
-			curr->flags.update_iframe_playlist.second = true;
+			curr->update_iframe_playlist.second = true;
+			hls_playlist->publish_playlist();
+		}
+	}
+
+	for(unsigned int i = 0; i < chunk_index.size(); i++)
+	{
+		ChunkIndex * curr = chunk_index[i];
+		if(curr->update_media_playlist.first && !curr->update_media_playlist.second)
+		{
+			hls_playlist->update_media(curr);
+			curr->update_media_playlist.second = true;
 			hls_playlist->publish_playlist();
 		}
 	}
