@@ -71,8 +71,11 @@ void Segmenter::create_index_table()
                 }
                 else if ((*it)->slice_type[i].first == non_idr)
                 {
-                	IFrameIndex * last_iframe = iframe_index.back();
-                	last_iframe->update(accum_pktcount, accum_byteoffset);
+                	if(iframe_index.size() > 0)
+                	{
+                    	IFrameIndex * last_iframe = iframe_index.back();
+                    	last_iframe->update(accum_pktcount, accum_byteoffset);
+                	}
                 }
             }
         }
