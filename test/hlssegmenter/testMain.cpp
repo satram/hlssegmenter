@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 	 */
 	ConfigParams config;
 	config.playlist_type = event;
-	config.segment_duration_ms = 4000;
+	config.segment_duration_ms = 20000;
 	config.web_server_url = "http://10.121.1.63:80/hlschunks/";
 	config.output_folder = "/var/www/html/hlschunks/";
 

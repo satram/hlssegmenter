@@ -21,12 +21,15 @@ class Segmenter {
 	long long byte_offset;
 
 	ParseTsStream input_ts_stream;
+
 	HlsPlaylistGenerator* hls_playlist;
-    void create_index_table();
+
+	void create_index_table();
     void update_playlists();
     void update_chunk(IFrameIndex *last_iframe);
+
     double segment_duration;
-    long long prev_dts;
+    long long prev_timestamp;
 
 public:
 	Segmenter(ConfigParams &config);

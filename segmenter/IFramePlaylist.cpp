@@ -27,6 +27,7 @@ void IFramePlaylist::add_node(IFrameIndex *index, VariantPlaylist *variant_playl
 	oss << "node-" << index->total_pkt_count;
 	Section node(oss.str());
 	double duration = (double)index->accum_gop_duration / 1000.0;
+	//std::cout << "IDR duration " << duration << std::endl;
 	node.add_tag("INF", duration);
 	oss.str("");
 	oss << index->idr_size << "@" << index->idr_start_offset;

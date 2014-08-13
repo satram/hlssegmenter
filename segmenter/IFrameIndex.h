@@ -26,9 +26,9 @@ class IFrameIndex {
 	std::pair<bool,bool> update_iframe_playlist; //pair of do and done
 
 public:
-	IFrameIndex(int count, int duration_ms, long long byte_offset);
+	IFrameIndex(int count, long long byte_offset);
 	virtual ~IFrameIndex();
-	void update(int count, int duration_ms, long long byte_offset);
+	void update(int count, long long byte_offset);
 	void finalize(int count, int duration_ms, long long byte_offset);
 	friend class Segmenter;
 	friend class IFramePlaylist;

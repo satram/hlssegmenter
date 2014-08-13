@@ -15,7 +15,7 @@ Segmenter::Segmenter(ConfigParams &config)
 	ts_packet_count = 0;
 	byte_offset = 0;
 	segment_duration = config.segment_duration_ms;
-	prev_dts = 0;
+	prev_timestamp = 0;
 
     curr_chunk = new ChunkIndex();
     curr_chunk->set_interval(config.segment_duration_ms);
@@ -26,6 +26,9 @@ Segmenter::Segmenter(ConfigParams &config)
 Segmenter::~Segmenter()
 {
 	for(auto it = iframe_index.begin(), ite = iframe_index.end(); it != ite; it++)
+		delete (*it);
+
+	for(auto it = chunk_index.begin(), ite = chunk_index.end(); it != ite; it++)
 		delete (*it);
 
 	if(hls_playlist)
@@ -50,10 +53,6 @@ void Segmenter::create_index_table()
         {
         	int accum_pktcount = ts_packet_count + (*it)->pkt_count;
         	long long accum_byteoffset = (*it)->byte_offset + byte_offset;
-        	int duration_ms = ((*it)->dts - prev_dts)/TS_TIMESCALE_MILLISEC;
-        	if(prev_dts == 0)
-        		duration_ms = 0;
-        	prev_dts = (*it)->dts;
 
         	for(int i = 0; i < (*it)->detected_slice_type_count;i++)
             {
@@ -61,18 +60,19 @@ void Segmenter::create_index_table()
                 {
                 	if(iframe_index.size() > 0 && iframe_index.back() != 0)
                 	{
+                    	int duration_ms = ((*it)->pts - prev_timestamp)/TS_TIMESCALE_MILLISEC;
 						IFrameIndex * last_iframe = iframe_index.back();
 						last_iframe->finalize(accum_pktcount, duration_ms , accum_byteoffset);
 						update_chunk(last_iframe);
                 	}
                 	//add new IDR entry
-                    iframe_index.push_back(new IFrameIndex(accum_pktcount, duration_ms , accum_byteoffset));
-
+                    iframe_index.push_back(new IFrameIndex(accum_pktcount, accum_byteoffset));
+                    prev_timestamp = (*it)->pts;
                 }
                 else if ((*it)->slice_type[i].first == non_idr)
                 {
                 	IFrameIndex * last_iframe = iframe_index.back();
-                	last_iframe->update(accum_pktcount, duration_ms , accum_byteoffset);
+                	last_iframe->update(accum_pktcount, accum_byteoffset);
                 }
             }
         }

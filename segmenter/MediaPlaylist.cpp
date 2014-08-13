@@ -32,6 +32,7 @@ void MediaPlaylist::add_node(ChunkIndex *index, VariantPlaylist *variant_playlis
 	oss << "node-" << index->chunk_duration;
 	Section node(oss.str());
 	double duration = (double)index->chunk_duration / 1000.0;
+	//std::cout << "chunk duration " << duration << std::endl;
 	node.add_tag("INF", duration);
 	oss.str("");
 	oss << index->chunk_size << "@" << index->chunk_start_offset;
