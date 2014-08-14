@@ -26,8 +26,9 @@ void MediaPlaylist::add_header(variant_stream_info &stream_info)
 	playlist.add_section(header);
 }
 
-void MediaPlaylist::add_node(ChunkIndex *index, VariantPlaylist *variant_playlist)
+void MediaPlaylist::add_node(IndexBase *idx, VariantPlaylist *variant_playlist)
 {
+	ChunkIndex *index = dynamic_cast<ChunkIndex *> (idx);
 	std::ostringstream oss;
 	oss << "node-" << index->chunk_duration;
 	Section node(oss.str());
@@ -42,8 +43,12 @@ void MediaPlaylist::add_node(ChunkIndex *index, VariantPlaylist *variant_playlis
 	playlist.add_section(node);
 }
 
-void MediaPlaylist::remove_node()
+void MediaPlaylist::remove_node(IndexBase *idx)
 {
+	ChunkIndex *index = dynamic_cast<ChunkIndex *> (idx);
+	std::ostringstream oss;
+	oss << "node-" << index->chunk_duration;
+	playlist.delete_section(oss.str());
 }
 
 void MediaPlaylist::add_header(ConfigParams & config)
@@ -57,6 +62,9 @@ void MediaPlaylist::add_header(ConfigParams & config)
 
 void MediaPlaylist::add_footer()
 {
+	Section footer ("footer");
+	footer.add_tag("ENDLIST");
+	playlist.add_section(footer);
 }
 
 void MediaPlaylist::finalize_playlist()
@@ -64,8 +72,5 @@ void MediaPlaylist::finalize_playlist()
 	Section header = playlist.get_section("header");
 	header.modify_tag("PLAYLIST-TYPE", "VOD");
 	playlist.modify_section(header);
-
-	Section footer ("footer");
-	footer.add_tag("ENDLIST");
-	playlist.add_section(footer);
+	add_footer();
 }

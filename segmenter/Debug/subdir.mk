@@ -9,6 +9,7 @@ CPP_SRCS += \
 ../HlsPlaylistGenerator.cpp \
 ../IFrameIndex.cpp \
 ../IFramePlaylist.cpp \
+../IndexBase.cpp \
 ../MasterPlaylist.cpp \
 ../MediaPlaylist.cpp \
 ../PlaylistInterface.cpp \
@@ -21,6 +22,7 @@ OBJS += \
 ./HlsPlaylistGenerator.o \
 ./IFrameIndex.o \
 ./IFramePlaylist.o \
+./IndexBase.o \
 ./MasterPlaylist.o \
 ./MediaPlaylist.o \
 ./PlaylistInterface.o \
@@ -33,6 +35,7 @@ CPP_DEPS += \
 ./HlsPlaylistGenerator.d \
 ./IFrameIndex.d \
 ./IFramePlaylist.d \
+./IndexBase.d \
 ./MasterPlaylist.d \
 ./MediaPlaylist.d \
 ./PlaylistInterface.d \

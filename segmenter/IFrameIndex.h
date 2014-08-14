@@ -10,8 +10,7 @@
 
 #include "segmenterCommon.h"
 
-
-class IFrameIndex {
+class IFrameIndex : public IndexBase {
 
 	int total_pkt_count;
 

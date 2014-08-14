@@ -36,6 +36,7 @@ class IFramePlaylist;
 class MasterPlaylist;
 class MediaPlaylist;
 class HlsPlaylistGenerator;
+class IndexBase;
 class IFrameIndex;
 class ChunkIndex;
 class Segmenter;
@@ -44,6 +45,7 @@ class Segmenter;
 #include "PlaylistInterface.h"
 #include "VariantPlaylist.h"
 #include "HlsPlaylistGenerator.h"
+#include "IndexBase.h"
 #include "IFrameIndex.h"
 #include "ChunkIndex.h"
 #include "Segmenter.h"

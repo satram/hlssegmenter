@@ -10,7 +10,8 @@
 
 #include "segmenterCommon.h"
 
-class ChunkIndex {
+class ChunkIndex : public IndexBase
+{
 
 	static unsigned int input_chunk_interval;
 

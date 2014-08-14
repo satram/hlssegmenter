@@ -21,8 +21,9 @@ void IFramePlaylist::add_header(ConfigParams & config)
 {
 }
 
-void IFramePlaylist::add_node(IFrameIndex *index, VariantPlaylist *variant_playlist)
+void IFramePlaylist::add_node(IndexBase *idx, VariantPlaylist *variant_playlist)
 {
+	IFrameIndex *index = dynamic_cast<IFrameIndex *>(idx);
 	std::ostringstream oss;
 	oss << "node-" << index->total_pkt_count;
 	Section node(oss.str());
@@ -41,30 +42,32 @@ void IFramePlaylist::add_node(IFrameIndex *index, VariantPlaylist *variant_playl
 
 void IFramePlaylist::add_header(variant_stream_info &stream_info)
 {
-	if (stream_info.generate_iframe_url)
-	{
-		Section header("header");
-		header.add_tag("M3U");
-		header.add_tag("VERSION", 4);
-		header.add_tag("I-FRAMES-ONLY");
-		playlist.add_section(header);
-	}
+	Section header("header");
+	header.add_tag("M3U");
+	header.add_tag("VERSION", 4);
+	header.add_tag("I-FRAMES-ONLY");
+	playlist.add_section(header);
 }
 
 void IFramePlaylist::add_footer()
 {
-
+	Section footer ("footer");
+	footer.add_tag("ENDLIST");
+	playlist.add_section(footer);
 }
 
-void IFramePlaylist::remove_node()
+void IFramePlaylist::remove_node(IndexBase *idx)
 {
+	IFrameIndex *index = dynamic_cast<IFrameIndex *>(idx);
+	std::ostringstream oss;
+	oss << "node-" << index->total_pkt_count;
+	playlist.delete_section(oss.str());
+
 }
 
 void IFramePlaylist::finalize_playlist()
 {
-	Section footer ("footer");
-	footer.add_tag("ENDLIST");
-	playlist.add_section(footer);
+	add_footer();
 }
 
 
