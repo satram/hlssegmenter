@@ -8,7 +8,6 @@
 #ifndef INDEXBASE_H_
 #define INDEXBASE_H_
 
-//#include "segmenterCommon.h"
 
 class IndexBase
 {

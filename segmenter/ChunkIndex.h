@@ -19,7 +19,8 @@ class ChunkIndex : public IndexBase
 	long long chunk_size;
 	unsigned int chunk_duration;
 
-	std::pair<bool,bool> update_media_playlist; //pair of do and done
+	std::pair<bool,bool> add_to_playlist; //pair of do and done
+	std::pair<bool,bool> remove_from_playlist; //pair of do and done
 
 public:
 	ChunkIndex();

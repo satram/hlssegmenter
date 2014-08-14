@@ -15,7 +15,7 @@ IFrameIndex::IFrameIndex(int count, long long byte_offset)
 
 	//needed for finalize idr entries
 	idr_size = 0;
-	update_iframe_playlist = std::pair<bool,bool>(false, false);
+	add_to_playlist = std::pair<bool,bool>(false, false);
 
 	accum_gop_duration = 0;
 	accum_gop_size = 0;
@@ -38,7 +38,7 @@ void IFrameIndex::update(int count,long long byte_offset)
 
 void IFrameIndex::finalize(int count, int duration_ms, long long byte_offset)
 {
-	update_iframe_playlist.first = true;
+	add_to_playlist.first = true;
 	accum_gop_duration = duration_ms;
 	accum_gop_size += byte_offset - prev_packet_byte_offset;
 	prev_packet_byte_offset = byte_offset;

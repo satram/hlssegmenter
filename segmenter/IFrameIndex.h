@@ -22,7 +22,8 @@ class IFrameIndex : public IndexBase {
 
 	long long prev_packet_byte_offset;
 
-	std::pair<bool,bool> update_iframe_playlist; //pair of do and done
+	std::pair<bool,bool> add_to_playlist; //pair of do and done
+	std::pair<bool,bool> remove_from_playlist; //pair of do and done
 
 public:
 	IFrameIndex(int count, long long byte_offset);

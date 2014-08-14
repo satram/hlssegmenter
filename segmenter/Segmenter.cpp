@@ -87,10 +87,10 @@ void Segmenter::update_playlists()
 	for(unsigned int i = 0; i < iframe_index.size(); i++)
 	{
 		IFrameIndex * curr = iframe_index[i];
-		if(curr->update_iframe_playlist.first && !curr->update_iframe_playlist.second)
+		if(curr->add_to_playlist.first && !curr->add_to_playlist.second)
 		{
 			hls_playlist->update_iframe(curr);
-			curr->update_iframe_playlist.second = true;
+			curr->add_to_playlist.second = true;
 			hls_playlist->publish_playlist();
 		}
 	}
@@ -98,10 +98,10 @@ void Segmenter::update_playlists()
 	for(unsigned int i = 0; i < chunk_index.size(); i++)
 	{
 		ChunkIndex * curr = chunk_index[i];
-		if(curr->update_media_playlist.first && !curr->update_media_playlist.second)
+		if(curr->add_to_playlist.first && !curr->add_to_playlist.second)
 		{
 			hls_playlist->update_media(curr);
-			curr->update_media_playlist.second = true;
+			curr->add_to_playlist.second = true;
 			hls_playlist->publish_playlist();
 		}
 	}
