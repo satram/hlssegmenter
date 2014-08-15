@@ -16,9 +16,6 @@ MasterPlaylist::~MasterPlaylist() {
 	// TODO Auto-generated destructor stub
 }
 
-void MasterPlaylist::remove_node()
-{
-}
 
 void MasterPlaylist::add_header(ConfigParams & config)
 {
@@ -68,23 +65,6 @@ void MasterPlaylist::add_header(ConfigParams & config)
 }
 
 
-void MasterPlaylist::add_node(IndexBase *index, VariantPlaylist *variant_playlist)
-{
-}
 
-
-
-void MasterPlaylist::add_header(variant_stream_info & stream_info)
-{
-}
-
-void MasterPlaylist::add_footer()
-{
-}
-
-void MasterPlaylist::finalize_playlist()
-{
-
-}
 
 

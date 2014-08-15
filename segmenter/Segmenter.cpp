@@ -39,7 +39,7 @@ Segmenter::~Segmenter()
 		delete hls_playlist;
 }
 
-void Segmenter::update_chunk(IFrameIndex *last_iframe)
+void Segmenter::update_chunk_index(IFrameIndex *last_iframe)
 {
 	bool make_new_chunk = curr_chunk->update_chunk(last_iframe);
 	if(make_new_chunk){
@@ -48,7 +48,7 @@ void Segmenter::update_chunk(IFrameIndex *last_iframe)
 	}
 }
 
-void Segmenter::create_index_table()
+void Segmenter::update_iframe_index()
 {
     std::list<VideoPktInfo*> pkt_list = input_ts_stream.get_pkt_info();
     for(auto it = pkt_list.begin(), ite = pkt_list.end();it != ite;it++)
@@ -67,7 +67,7 @@ void Segmenter::create_index_table()
                     	int duration_ms = ((*it)->pts - prev_timestamp)/TS_TIMESCALE_MILLISEC;
 						IFrameIndex * last_iframe = dynamic_cast<IFrameIndex *> (iframe_index.back());
 						last_iframe->finalize(accum_pktcount, duration_ms , accum_byteoffset);
-						update_chunk(last_iframe);
+						update_chunk_index(last_iframe);
                 	}
                 	//add new IDR entry
                     iframe_index.push_back(new IFrameIndex(accum_pktcount, accum_byteoffset));
@@ -94,6 +94,7 @@ void Segmenter::check_index_add(std::list<IndexBase *> &index)
         {
             hls_playlist->update(*it, true);
             (*it)->add_to_playlist.second = true;
+			update_playlist = true;
         }
     }
 }
@@ -106,7 +107,6 @@ void Segmenter::check_index_remove(std::list<IndexBase *> &index)
 	{
 		if(remove_entry)
 		{
-			hls_playlist->update(*it, false);
 			(*it)->purge = true;
 			continue;
 		}
@@ -115,12 +115,19 @@ void Segmenter::check_index_remove(std::list<IndexBase *> &index)
 			remove_entry = true;
 	}
 	for(auto it = index.begin(), ite = index.end(); it != ite; it++)
+	{
 		if((*it)->purge)
+		{
 			it = index.erase(it);
+			hls_playlist->update(*it, false);
+			update_playlist = true;
+		}
+	}
 }
 
 void Segmenter::update_playlists()
 {
+	update_playlist = false;
     check_index_add(iframe_index);
     check_index_add(chunk_index);
     if(playlist_type == LIVE)
@@ -128,7 +135,8 @@ void Segmenter::update_playlists()
 		check_index_remove(iframe_index);
 		check_index_remove(chunk_index);
     }
-	hls_playlist->publish_playlist();
+    if(update_playlist)
+    	hls_playlist->publish_playlist();
 }
 
 
@@ -138,7 +146,7 @@ void Segmenter::parse_ts_packets(const char *inp_buffer, int bufsize)
     input_ts_stream.open(inp_buffer, bufsize);
     input_ts_stream.parse_bytestream();
 
-    create_index_table();
+    update_iframe_index();
     update_playlists();
     hls_playlist->publish_media(inp_buffer, bufsize);
 

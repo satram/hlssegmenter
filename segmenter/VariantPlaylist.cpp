@@ -68,17 +68,11 @@ void VariantPlaylist::update_playlist(IndexBase *index, bool addition)
 {
 	if(dynamic_cast<ChunkIndex *>(index))
 	{
-		if(addition)
-			mediaUrl->add_node(index, this);
-		else
-			mediaUrl->remove_node(index);
+		mediaUrl->update_node(index, this, addition);
 	}
 	else
 	{
-		if(addition)
-			iframeUrl->add_node(index, this);
-		else
-			iframeUrl->remove_node(index);
+		iframeUrl->update_node(index, this, addition);
 	}
 }
 

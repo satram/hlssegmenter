@@ -24,9 +24,9 @@ class Segmenter {
 
 	HlsPlaylistGenerator* hls_playlist;
 
-	void create_index_table();
+	void update_iframe_index();
     void update_playlists();
-    void update_chunk(IFrameIndex *last_iframe);
+    void update_chunk_index(IFrameIndex *last_iframe);
     void check_index_add(std::list<IndexBase *> &index);
     void check_index_remove(std::list<IndexBase *> &index);
 
@@ -34,7 +34,7 @@ class Segmenter {
     unsigned int sliding_window_duration;
     hls_playlist_type playlist_type;
 
-
+    bool update_playlist;
     long long prev_timestamp;
 
 public:
