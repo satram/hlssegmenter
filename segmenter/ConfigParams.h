@@ -26,12 +26,7 @@ struct audio_codec_info
 	std::string subtype;
 };
 
-enum hls_playlist_type
-{
-	LIVE,
-	EVENT,
-	VOD
-};
+
 
 struct variant_stream_info
 {
@@ -50,9 +45,10 @@ public:
 	//common parameters across variants streams
 	std::string web_server_url;
 	std::string output_folder;
+
 	hls_playlist_type playlist_type;
 	unsigned int segment_duration_ms;
-	int sliding_window_duration;
+	unsigned int sliding_window_duration_ms;
 
 	ConfigParams();
 	virtual ~ConfigParams();

@@ -11,15 +11,16 @@ IFrameIndex::IFrameIndex(int count, long long byte_offset)
 {
 	//current entry
 	total_pkt_count = count;
-	idr_start_offset = byte_offset;
+	start_offset = byte_offset;
 
 	//needed for finalize idr entries
-	idr_size = 0;
+	size = 0;
 	add_to_playlist = std::pair<bool,bool>(false, false);
 
-	accum_gop_duration = 0;
+	duration = 0;
 	accum_gop_size = 0;
 	prev_packet_byte_offset = byte_offset;
+	purge = false;
 }
 
 IFrameIndex::~IFrameIndex()
@@ -29,8 +30,8 @@ IFrameIndex::~IFrameIndex()
 
 void IFrameIndex::update(int count,long long byte_offset)
 {
-	if(idr_size == 0)
-		idr_size = byte_offset - idr_start_offset;
+	if(size == 0)
+		size = byte_offset - start_offset;
 
 	accum_gop_size += byte_offset - prev_packet_byte_offset;
 	prev_packet_byte_offset = byte_offset;
@@ -39,7 +40,7 @@ void IFrameIndex::update(int count,long long byte_offset)
 void IFrameIndex::finalize(int count, int duration_ms, long long byte_offset)
 {
 	add_to_playlist.first = true;
-	accum_gop_duration = duration_ms;
+	duration = duration_ms;
 	accum_gop_size += byte_offset - prev_packet_byte_offset;
 	prev_packet_byte_offset = byte_offset;
 }

@@ -28,6 +28,13 @@
 #include <m3u8/Section.h>
 #include <m3u8/Playlist.h>
 
+
+enum hls_playlist_type
+{
+	LIVE,
+	EVENT,
+	VOD
+};
 class ConfigParams;
 struct variant_stream_info;
 class VariantPlaylist;

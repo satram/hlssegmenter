@@ -26,28 +26,26 @@ void MediaPlaylist::add_header(variant_stream_info &stream_info)
 	playlist.add_section(header);
 }
 
-void MediaPlaylist::add_node(IndexBase *idx, VariantPlaylist *variant_playlist)
+void MediaPlaylist::add_node(IndexBase *index, VariantPlaylist *variant_playlist)
 {
-	ChunkIndex *index = dynamic_cast<ChunkIndex *> (idx);
 	std::ostringstream oss;
-	oss << "node-" << index->chunk_duration;
+	oss << "node-" << index->duration;
 	Section node(oss.str());
-	double duration = (double)index->chunk_duration / 1000.0;
+	double duration = (double)index->duration / 1000.0;
 	//std::cout << "chunk duration " << duration << std::endl;
 	node.add_tag("INF", duration);
 	oss.str("");
-	oss << index->chunk_size << "@" << index->chunk_start_offset;
+	oss << index->size << "@" << index->start_offset;
 	node.add_tag("BYTERANGE", oss.str());
 	node.set_path(variant_playlist->transcoded_output_url);
 	node.set_locator(variant_playlist->transcoded_output_filename);
 	playlist.add_section(node);
 }
 
-void MediaPlaylist::remove_node(IndexBase *idx)
+void MediaPlaylist::remove_node(IndexBase *index)
 {
-	ChunkIndex *index = dynamic_cast<ChunkIndex *> (idx);
 	std::ostringstream oss;
-	oss << "node-" << index->chunk_duration;
+	oss << "node-" << index->duration;
 	playlist.delete_section(oss.str());
 }
 

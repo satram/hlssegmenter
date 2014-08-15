@@ -64,16 +64,22 @@ void VariantPlaylist::finalize_playlist()
 		iframeUrl->finalize_playlist();
 }
 
-void VariantPlaylist::update_media_playlist(ChunkIndex *index)
+void VariantPlaylist::update_playlist(IndexBase *index, bool addition)
 {
-	mediaUrl->add_node(index, this);
-	mediaUrl->publish_playlist();
-}
-
-void VariantPlaylist::update_iframe_playlist(IFrameIndex *index)
-{
-	iframeUrl->add_node(index, this);
-	iframeUrl->publish_playlist();
+	if(dynamic_cast<ChunkIndex *>(index))
+	{
+		if(addition)
+			mediaUrl->add_node(index, this);
+		else
+			mediaUrl->remove_node(index);
+	}
+	else
+	{
+		if(addition)
+			iframeUrl->add_node(index, this);
+		else
+			iframeUrl->remove_node(index);
+	}
 }
 
 

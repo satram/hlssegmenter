@@ -12,15 +12,7 @@
 
 class ChunkIndex : public IndexBase
 {
-
 	static unsigned int input_chunk_interval;
-
-	long long chunk_start_offset;
-	long long chunk_size;
-	unsigned int chunk_duration;
-
-	std::pair<bool,bool> add_to_playlist; //pair of do and done
-	std::pair<bool,bool> remove_from_playlist; //pair of do and done
 
 public:
 	ChunkIndex();
@@ -31,8 +23,9 @@ public:
 	{
 		input_chunk_interval = interval;
 	};
+
+
 	friend class Segmenter;
-	friend class MediaPlaylist;
 };
 
 #endif /* CHUNKINDEX_H_ */

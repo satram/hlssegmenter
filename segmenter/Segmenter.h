@@ -13,8 +13,8 @@
 
 class Segmenter {
 
-	std::vector<IFrameIndex *> iframe_index;
-	std::vector<ChunkIndex *> chunk_index;
+	std::list<IndexBase *> iframe_index;
+	std::list<IndexBase *> chunk_index;
 	ChunkIndex *curr_chunk;
 
 	int ts_packet_count;
@@ -27,8 +27,14 @@ class Segmenter {
 	void create_index_table();
     void update_playlists();
     void update_chunk(IFrameIndex *last_iframe);
+    void check_index_add(std::list<IndexBase *> &index);
+    void check_index_remove(std::list<IndexBase *> &index);
 
-    double segment_duration;
+    unsigned int segment_duration;
+    unsigned int sliding_window_duration;
+    hls_playlist_type playlist_type;
+
+
     long long prev_timestamp;
 
 public:

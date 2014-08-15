@@ -21,17 +21,15 @@ void IFramePlaylist::add_header(ConfigParams & config)
 {
 }
 
-void IFramePlaylist::add_node(IndexBase *idx, VariantPlaylist *variant_playlist)
+void IFramePlaylist::add_node(IndexBase *index, VariantPlaylist *variant_playlist)
 {
-	IFrameIndex *index = dynamic_cast<IFrameIndex *>(idx);
 	std::ostringstream oss;
-	oss << "node-" << index->total_pkt_count;
+	oss << "node-" << index->duration;
 	Section node(oss.str());
-	double duration = (double)index->accum_gop_duration / 1000.0;
-	//std::cout << "IDR duration " << duration << std::endl;
+	double duration = (double)index->duration / 1000.0;
 	node.add_tag("INF", duration);
 	oss.str("");
-	oss << index->idr_size << "@" << index->idr_start_offset;
+	oss << index->size << "@" << index->start_offset;
 	node.add_tag("BYTERANGE", oss.str());
 	node.set_path(variant_playlist->transcoded_output_url);
 	node.set_locator(variant_playlist->transcoded_output_filename);
@@ -56,11 +54,10 @@ void IFramePlaylist::add_footer()
 	playlist.add_section(footer);
 }
 
-void IFramePlaylist::remove_node(IndexBase *idx)
+void IFramePlaylist::remove_node(IndexBase *index)
 {
-	IFrameIndex *index = dynamic_cast<IFrameIndex *>(idx);
 	std::ostringstream oss;
-	oss << "node-" << index->total_pkt_count;
+	oss << "node-" << index->duration;
 	playlist.delete_section(oss.str());
 
 }

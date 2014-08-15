@@ -38,18 +38,10 @@ void HlsPlaylistGenerator::generate_header(ConfigParams & config)
 	}
 }
 
-void HlsPlaylistGenerator::update_media(ChunkIndex *index)
+void HlsPlaylistGenerator::update(IndexBase *index, bool addition)
 {
-	//TODO make this call go to corresponding variant
 	VariantPlaylist * it = variants.back();
-	it->update_media_playlist(index);
-}
-
-void HlsPlaylistGenerator::update_iframe(IFrameIndex *index)
-{
-	//TODO make this call go to corresponding variant
-	VariantPlaylist * it = variants.back();
-	it->update_iframe_playlist(index);
+	it->update_playlist(index, addition);
 }
 
 void HlsPlaylistGenerator::publish_playlist()

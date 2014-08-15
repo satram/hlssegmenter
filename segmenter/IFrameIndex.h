@@ -14,16 +14,10 @@ class IFrameIndex : public IndexBase {
 
 	int total_pkt_count;
 
-	long long idr_start_offset;
-	long long idr_size;
 
-	unsigned int accum_gop_duration;
 	long long accum_gop_size;
-
 	long long prev_packet_byte_offset;
 
-	std::pair<bool,bool> add_to_playlist; //pair of do and done
-	std::pair<bool,bool> remove_from_playlist; //pair of do and done
 
 public:
 	IFrameIndex(int count, long long byte_offset);

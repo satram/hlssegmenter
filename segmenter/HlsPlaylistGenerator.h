@@ -21,8 +21,7 @@ public:
 	virtual ~HlsPlaylistGenerator();
 
 	void generate_header(ConfigParams &config);
-	void update_media(ChunkIndex *index);
-	void update_iframe(IFrameIndex *index);
+	void update(IndexBase *index, bool addition);
 
 	void publish_playlist();
 	void publish_media(const char *inp_buffer, int bufsize);

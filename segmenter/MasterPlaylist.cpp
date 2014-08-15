@@ -68,7 +68,7 @@ void MasterPlaylist::add_header(ConfigParams & config)
 }
 
 
-void MasterPlaylist::add_node(IFrameIndex *index, VariantPlaylist *variant_playlist)
+void MasterPlaylist::add_node(IndexBase *index, VariantPlaylist *variant_playlist)
 {
 }
 
