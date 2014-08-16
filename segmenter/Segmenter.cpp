@@ -6,6 +6,9 @@
  */
 
 #include "Segmenter.h"
+#include "HlsPlaylistGenerator.h"
+#include "ChunkIndex.h"
+#include "IFrameIndex.h"
 
 Segmenter::Segmenter(ConfigParams &config)
 {

@@ -6,6 +6,7 @@
  */
 
 #include "ChunkIndex.h"
+#include "IFrameIndex.h"
 
 unsigned int ChunkIndex::input_chunk_interval = 0;
 

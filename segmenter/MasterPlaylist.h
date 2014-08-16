@@ -9,6 +9,7 @@
 #define MASTERPLAYLIST_H_
 
 #include "segmenterCommon.h"
+#include "PlaylistInterface.h"
 
 class MasterPlaylist : public PlaylistInterface
 {

@@ -8,7 +8,8 @@
 #ifndef CHUNKINDEX_H_
 #define CHUNKINDEX_H_
 
-#include "segmenterCommon.h"
+//#include "segmenterCommon.h"
+#include "IndexBase.h"
 
 class ChunkIndex : public IndexBase
 {
@@ -23,7 +24,10 @@ public:
 	{
 		input_chunk_interval = interval;
 	};
-
+	void dispatch(PlaylistInterface *playlist, VariantPlaylist *var, bool addition)
+	{
+		playlist->update_node(this, var, addition);
+	};
 
 	friend class Segmenter;
 };

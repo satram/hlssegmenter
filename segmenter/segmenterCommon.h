@@ -49,12 +49,12 @@ class ChunkIndex;
 class Segmenter;
 
 #include "ConfigParams.h"
-#include "PlaylistInterface.h"
-#include "VariantPlaylist.h"
-#include "HlsPlaylistGenerator.h"
-#include "IndexBase.h"
-#include "IFrameIndex.h"
-#include "ChunkIndex.h"
+//#include "IndexBase.h"
+//#include "IFrameIndex.h"
+//#include "ChunkIndex.h"
+//#include "PlaylistInterface.h"
+//#include "VariantPlaylist.h"
+//#include "HlsPlaylistGenerator.h"
 #include "Segmenter.h"
 
 #endif /* SEGMENTERCOMMON_H_ */

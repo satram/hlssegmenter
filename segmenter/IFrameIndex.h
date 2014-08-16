@@ -8,7 +8,8 @@
 #ifndef IFRAMEINDEX_H_
 #define IFRAMEINDEX_H_
 
-#include "segmenterCommon.h"
+//#include "segmenterCommon.h"
+#include "IndexBase.h"
 
 class IFrameIndex : public IndexBase {
 
@@ -24,6 +25,10 @@ public:
 	virtual ~IFrameIndex();
 	void update(int count, long long byte_offset);
 	void finalize(int count, int duration_ms, long long byte_offset);
+	void dispatch(PlaylistInterface *playlist, VariantPlaylist *var, bool addition)
+	{
+		playlist->update_node(this, var, addition);
+	};
 	friend class Segmenter;
 	friend class IFramePlaylist;
 	friend class ChunkIndex;

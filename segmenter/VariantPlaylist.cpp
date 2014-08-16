@@ -8,6 +8,7 @@
 #include "VariantPlaylist.h"
 #include "MediaPlaylist.h"
 #include "IFramePlaylist.h"
+#include "IndexBase.h"
 
 VariantPlaylist::VariantPlaylist(ConfigParams &config, variant_stream_info &var)
 {
@@ -66,14 +67,8 @@ void VariantPlaylist::finalize_playlist()
 
 void VariantPlaylist::update_playlist(IndexBase *index, bool addition)
 {
-	if(dynamic_cast<ChunkIndex *>(index))
-	{
-		mediaUrl->update_node(index, this, addition);
-	}
-	else
-	{
-		iframeUrl->update_node(index, this, addition);
-	}
+	index->dispatch(mediaUrl, this, addition);
+	index->dispatch(iframeUrl, this, addition);
 }
 
 

@@ -25,7 +25,14 @@ public:
 	void publish_playlist();
 	virtual void add_header(ConfigParams & config){throw std::runtime_error("this is not defined in base");};
 	virtual void add_header(variant_stream_info &stream_info){throw std::runtime_error("this is not defined in base");};
-	virtual void update_node(IndexBase *index, VariantPlaylist *variant_playlist, bool addition){throw std::runtime_error("this is not defined in base");};
+	virtual void update_node(ChunkIndex *index, VariantPlaylist *variant_playlist, bool addition)
+	{
+		//throw std::runtime_error("this is not defined in base");
+	};
+	virtual void update_node(IFrameIndex *index, VariantPlaylist *variant_playlist, bool addition)
+	{
+		//throw std::runtime_error("this is not defined in base");
+	};
 	virtual void add_footer(){throw std::runtime_error("this is not defined in base");};
 	virtual void finalize_playlist(){throw std::runtime_error("this is not defined in base");};
 };

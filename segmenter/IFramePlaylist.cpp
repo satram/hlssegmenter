@@ -6,6 +6,8 @@
  */
 
 #include "IFramePlaylist.h"
+#include "IFrameIndex.h"
+#include "VariantPlaylist.h"
 
 IFramePlaylist::IFramePlaylist() {
 	// TODO Auto-generated constructor stub
@@ -21,7 +23,7 @@ void IFramePlaylist::add_header(ConfigParams & config)
 {
 }
 
-void IFramePlaylist::update_node(IndexBase *index, VariantPlaylist *variant_playlist, bool addition)
+void IFramePlaylist::update_node(IFrameIndex *index, VariantPlaylist *variant_playlist, bool addition)
 {
 	std::ostringstream oss;
 	oss << "node-" << index->duration;

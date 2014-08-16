@@ -6,6 +6,8 @@
  */
 
 #include "MediaPlaylist.h"
+#include "ChunkIndex.h"
+#include "VariantPlaylist.h"
 
 MediaPlaylist::MediaPlaylist() {
 	// TODO Auto-generated constructor stub
@@ -26,7 +28,7 @@ void MediaPlaylist::add_header(variant_stream_info &stream_info)
 	playlist.add_section(header);
 }
 
-void MediaPlaylist::update_node(IndexBase *index, VariantPlaylist *variant_playlist, bool addition)
+void MediaPlaylist::update_node(ChunkIndex *index, VariantPlaylist *variant_playlist, bool addition)
 {
 	std::ostringstream oss;
 	oss << "node-" << index->duration;
