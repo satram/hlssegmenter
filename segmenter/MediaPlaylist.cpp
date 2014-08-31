@@ -11,7 +11,7 @@
 
 MediaPlaylist::MediaPlaylist() {
 	sequence_number = 0;
-
+	node_count = 0;
 }
 
 MediaPlaylist::~MediaPlaylist() {
@@ -42,8 +42,12 @@ void MediaPlaylist::update_node(ChunkIndex *index, VariantPlaylist *variant_play
 		oss << index->size << "@" << index->start_offset;
 		node.add_tag("BYTERANGE", oss.str());
 		node.set_path(variant_playlist->transcoded_output_url);
+		//		oss.str("");
+		//		oss << "file-" << node_count++;
+		//		node.set_locator(oss.str());
 		node.set_locator(variant_playlist->transcoded_output_filename);
 		playlist.add_section(node);
+		node_count++;
 	}
 	else
 	{

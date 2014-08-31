@@ -106,6 +106,7 @@ void Segmenter::check_index_remove(std::list<IndexBase *> &index)
 {
 	unsigned int current_sliding_window_duration = 0;
 	bool remove_entry = false;
+	unsigned int num_valid_index = 0;
 	for(auto it = index.rbegin(), ite = index.rend(); it != ite; it++)
 	{
 		if(remove_entry)
@@ -114,15 +115,17 @@ void Segmenter::check_index_remove(std::list<IndexBase *> &index)
 			continue;
 		}
 		current_sliding_window_duration += (*it)->duration;
-		if(current_sliding_window_duration > sliding_window_duration)
+		//second condition is to ensure there are atleast 3 valid entries in playlist (Pantos 6.2.2)
+		if(current_sliding_window_duration > sliding_window_duration && (num_valid_index > 2))
 			remove_entry = true;
+		num_valid_index++;
 	}
 	for(auto it = index.begin(), ite = index.end(); it != ite; it++)
 	{
 		if((*it)->purge)
 		{
-			it = index.erase(it);
 			hls_playlist->update(*it, false);
+			it = index.erase(it);
 			update_playlist = true;
 		}
 	}
