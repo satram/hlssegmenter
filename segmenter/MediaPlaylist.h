@@ -14,6 +14,7 @@
 
 class MediaPlaylist : public PlaylistInterface
 {
+	unsigned int sequence_number;
 public:
 	MediaPlaylist();
 	virtual ~MediaPlaylist();
