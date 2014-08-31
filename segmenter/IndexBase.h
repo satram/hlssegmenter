@@ -22,11 +22,7 @@ class IndexBase
 public:
 	IndexBase();
 	virtual ~IndexBase();
-	virtual void dispatch(PlaylistInterface *playlist, VariantPlaylist *var, bool addition)
-	{
-		throw std::runtime_error("not implemented in base class");
-	};
-
+	virtual void dispatch(PlaylistInterface *playlist, VariantPlaylist *var, bool addition)=0;
 	friend class Segmenter;
 	friend class ChunkIndex;
 	friend class IFrameIndex;

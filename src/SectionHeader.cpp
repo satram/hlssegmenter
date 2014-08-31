@@ -7,6 +7,20 @@
 
 #include "SectionHeader.h"
 
+class SH_exception: public std::exception
+{
+public:
+	virtual const char * what() const throw()
+	{
+		std::ostringstream oss;
+		oss << "SH assert failure at line#" << __LINE__;
+		return(oss.str().c_str());
+	};
+};
+
+#define sh_assert(x) {if(!x) throw SH_exception();}
+
+
 SectionHeader::SectionHeader() {
 	// TODO Auto-generated constructor stub
 
@@ -21,10 +35,8 @@ void SectionHeader::input_bitstream(Bitstream & bitstream, log4c_category_t *myc
 	pointer_field = bitstream.read_bits(8);
 	table_id = bitstream.read_bits(8);
     section_syntax_indicator = bitstream.read_bits(1);
-    if(section_syntax_indicator != 1)
-       	throw(std::runtime_error("sectionheader: section_syntax_indicator != 1"));
-    if(bitstream.read_bits(1) != 0)
-    	throw(std::runtime_error("sectionheader: reserved bit(10) != 0"));
+    sh_assert(section_syntax_indicator == 1);
+    sh_assert(bitstream.read_bits(1) == 0);
     bitstream.skip_bits(2);
     log4c_category_log(mycat, LOG4C_PRIORITY_TRACE, "table_id %d, section_syntax_indicator %d", table_id, section_syntax_indicator);
 
