@@ -35,7 +35,6 @@ void ParseTsHeader::input_bitstream(Bitstream & bitstream)
 	//log4c_category_log(mycat, LOG4C_PRIORITY_INFO, "got sync_byte as %x", sync_byte);
 	if(sync_byte != 0x47 && sync_byte != 0x48)
 	{
-		//		throw(std::runtime_error("sync byte != 0x47"));
 		bitstream.seek_pos(start_offset);
 		bitstream.calibrate_ts_packet_size();
 		sync_byte = bitstream.read_bits(8);

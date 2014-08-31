@@ -17,11 +17,12 @@ int main(int argc, char *argv[])
 	 * Set the input config parameters
 	 */
 	ConfigParams config;
-//	config.playlist_type = EVENT;
-
+#if 1
+	config.playlist_type = EVENT;
+#else
 	config.playlist_type = LIVE;
 	config.sliding_window_duration_ms = 40000;
-
+#endif
 	config.segment_duration_ms = 5000;
 	config.web_server_url = "http://10.121.1.63:80/hlschunks/";
 	config.output_folder = "/var/www/html/hlschunks/";

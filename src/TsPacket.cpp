@@ -7,7 +7,14 @@
 
 #include "TsPacket.h"
 
-
+class TS_exception: public std::exception
+{
+public:
+	virtual const char * what() const throw()
+	{
+		return nullptr;
+	};
+};
 
 
 TsPacket::TsPacket(int ts_packet_count){
@@ -75,13 +82,13 @@ void TsPacket::parse_data_byte(Bitstream & bitstream, bool parse_data)
 			else
 			{
 				//bitstream.skip_bytes(data_packet_start_byte_offset, TS_PKT_SIZE_BYTES);
-				throw(std::runtime_error("Not Interested in this TS Packet"));
+				throw TS_exception();
 			}
 		}
 	}
 	else
 	{
-		throw(std::runtime_error("Not a valid data packet"));
+		throw TS_exception();
 	}
 }
 

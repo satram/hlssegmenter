@@ -7,6 +7,20 @@
 
 #include "ParsePESPacket.h"
 
+class PES_exception: public std::exception
+{
+public:
+	virtual const char * what() const throw()
+	{
+		std::ostringstream oss;
+		oss << "PES assert failure at line#" << __LINE__;
+		return(oss.str().c_str());
+	};
+};
+
+#define pes_assert(x) {if(!x) throw PES_exception();}
+
+
 void ParsePESPacket::input_bitstream(Bitstream & bitstream)
 {
 	pes_header_start_offset = bitstream.get_in_byte_offset();
@@ -29,7 +43,7 @@ void ParsePESPacket::input_bitstream(Bitstream & bitstream)
 	)
 	{
 		int marker = bitstream.read_bits(2);
-		assert(marker == 0x2);
+		pes_assert(marker == 0x2);
 		PES_scrambling_control = bitstream.read_bits(2);
 		PES_priority = (bool)bitstream.read_bits(1);
 		data_alignment_indicator = (bool)bitstream.read_bits(1);
@@ -47,7 +61,7 @@ void ParsePESPacket::input_bitstream(Bitstream & bitstream)
 		if(PTS_DTS_flags == 0x2)
 		{
 			marker = bitstream.read_bits(4);
-			assert(marker == 0x2);
+			pes_assert(marker == 0x2);
 			PTS = bitstream.read_bits(3) << 30;
 			bitstream.skip_bits(1);
 			PTS |= (bitstream.read_bits(15) << 15);
@@ -59,7 +73,7 @@ void ParsePESPacket::input_bitstream(Bitstream & bitstream)
 		if(PTS_DTS_flags == 0x3)
 		{
 			marker = bitstream.read_bits(4);
-			assert(marker == 0x3);
+			pes_assert(marker == 0x3);
 			PTS = bitstream.read_bits(3) << 30;
 			bitstream.skip_bits(1);
 			PTS |= (bitstream.read_bits(15) << 15);
@@ -68,7 +82,7 @@ void ParsePESPacket::input_bitstream(Bitstream & bitstream)
 			bitstream.skip_bits(1);
 
 			marker = bitstream.read_bits(4);
-			assert(marker == 0x1);
+			pes_assert(marker == 0x1);
 			DTS = bitstream.read_bits(3) << 30;
 			bitstream.skip_bits(1);
 			DTS |= (bitstream.read_bits(15) << 15);
@@ -180,7 +194,7 @@ void ParsePESPacket::input_bitstream(Bitstream & bitstream)
 			if(PSTD_buffer_flag)
 			{
 				marker = bitstream.read_bits(2);
-				assert(marker == 0x1);
+				pes_assert(marker == 0x1);
 				PSTD_buffer_scale = bitstream.read_bits(1);
 				PSTD_buffer_size = bitstream.read_bits(13);
 			}
