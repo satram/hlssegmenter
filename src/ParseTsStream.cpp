@@ -130,6 +130,8 @@ void ParseTsStream::parse_bytestream()
         }
         catch(std::exception & e){
             log4c_category_log(mycat, LOG4C_PRIORITY_INFO, "%s", e.what());
+            if(e.what() != nullptr)
+            	std::cout << e.what() << std::endl;
             ts_packet->skip_to_end(bitstream);
         }
         //save the packets data in program stream, video or audio stream

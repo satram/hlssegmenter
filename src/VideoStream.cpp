@@ -137,6 +137,7 @@ const char * VideoPktInfo::convert_slice_type_string(H264_VIDEO_SLICE_TYPE type)
 void VideoPktInfo::detect_slice_type(TsPacket *ts)
 {
 	std::vector<unsigned char> data_bytes = ts->get_pes_packet()->get_data_bytes();
+	if(data_bytes.empty()) return;
 	H264_VIDEO_SLICE_TYPE tmp;
 	const char *str;
 	for(int i = 0; i < DATA_BYTES_STORAGE - 4; i++)
