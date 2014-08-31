@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 	 * Set the input config parameters
 	 */
 	ConfigParams config;
-	//config.playlist_type = EVENT;
+//	config.playlist_type = EVENT;
 
 	config.playlist_type = LIVE;
 	config.sliding_window_duration_ms = 40000;

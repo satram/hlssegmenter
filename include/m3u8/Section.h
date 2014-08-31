@@ -63,7 +63,7 @@ public:
 	{
 		locator = std::string(l);
 	};
-	void set_locator(std::string& l)
+	void set_locator(std::string l)
 	{
 		locator = l;
 	};
