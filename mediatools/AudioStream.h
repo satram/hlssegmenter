@@ -10,13 +10,6 @@
 
 #include "mt_common.h"
 
-enum AUDIO_STREAM_TYPE
-{
-	mpeg1audio = 0x3,
-	mpeg2audio = 0x4,
-	mpeg2audio_adts = 0xf,
-	mpeg4audio_latm = 0x11
-};
 
 class AudioPktInfo
 {

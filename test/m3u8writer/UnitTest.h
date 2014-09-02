@@ -8,7 +8,7 @@
 #ifndef UNITTEST_H_
 #define UNITTEST_H_
 
-#include "m3u8/Common.h"
+#include "m3u8/Playlist.h"
 
 class UnitTest {
 	void add_node_to_playlist(int sequencenum, double duration, Playlist &tmp);

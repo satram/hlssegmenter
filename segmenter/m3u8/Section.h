@@ -8,7 +8,7 @@
 #ifndef SECTION_H_
 #define SECTION_H_
 
-#include "Common.h"
+#include "m3u8/Tag.h"
 
 class Section {
 	std::list<Tag> tags;

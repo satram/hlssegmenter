@@ -9,6 +9,10 @@
 #define PARSETSSTREAM_H_
 
 #include "mt_common.h"
+#include "Bitstream.h"
+#include "Profiler.h"
+#include "ElementaryStream.h"
+#include "VideoStream.h"
 
 class ParseTsStream {
 

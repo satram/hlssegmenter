@@ -18,11 +18,11 @@
 #include <algorithm>
 #include <exception>
 
+class NameBase;
+class Property;
+class Tag;
+class Section;
+class Playlist;
 
-#include "Name.h"
-#include "Property.h"
-#include "Tag.h"
-#include "Section.h"
-#include "Playlist.h"
 
 #endif /* COMMON_H_ */

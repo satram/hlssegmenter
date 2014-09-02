@@ -13,13 +13,6 @@
 #define H264_START_CODE1 (0x000001)
 #define H264_START_CODE2 (0x00000001)
 
-enum VIDEO_STREAM_TYPE
-{
-	mpeg1video = 0x1,
-	mpeg2video = 0x2,
-	mpeg4video = 0x10,
-	h264video = 0x1b
-};
 
 enum H264_VIDEO_SLICE_TYPE
 {
