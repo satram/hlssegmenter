@@ -6,6 +6,7 @@
  */
 
 #include "ParseTsHeader.h"
+#include "Bitstream.h"
 
 ParseTsHeader::ParseTsHeader() {
 	mycat = log4c_category_get("tsparser.tsheader");

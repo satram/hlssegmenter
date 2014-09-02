@@ -8,7 +8,7 @@
 #ifndef SECTIONHEADER_H_
 #define SECTIONHEADER_H_
 
-#include "Common.h"
+#include "mt_common.h"
 
 class SectionHeader {
 	unsigned char pointer_field;

@@ -6,6 +6,7 @@
  */
 
 #include "ParseAdaptationField.h"
+#include "Bitstream.h"
 
 ParseAdaptationField::~ParseAdaptationField()
 {

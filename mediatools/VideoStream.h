@@ -8,7 +8,7 @@
 #ifndef VIDEOSTREAM_H_
 #define VIDEOSTREAM_H_
 
-#include "Common.h"
+#include "mt_common.h"
 
 #define H264_START_CODE1 (0x000001)
 #define H264_START_CODE2 (0x00000001)

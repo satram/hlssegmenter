@@ -6,6 +6,7 @@
  */
 
 #include "SectionHeader.h"
+#include "Bitstream.h"
 
 class SH_exception: public std::exception
 {

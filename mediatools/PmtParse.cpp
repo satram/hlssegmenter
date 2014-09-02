@@ -6,6 +6,8 @@
  */
 
 #include "PmtParse.h"
+#include "Bitstream.h"
+#include "SectionHeader.h"
 
 void PmtParse::input_bitstream(Bitstream & bitstream)
 {

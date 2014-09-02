@@ -8,7 +8,7 @@
 #ifndef AUDIOSTREAM_H_
 #define AUDIOSTREAM_H_
 
-#include "Common.h"
+#include "mt_common.h"
 
 enum AUDIO_STREAM_TYPE
 {

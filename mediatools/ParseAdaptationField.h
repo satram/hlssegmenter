@@ -8,7 +8,7 @@
 #ifndef PARSEADAPTATIONFIELD_H_
 #define PARSEADAPTATIONFIELD_H_
 
-#include "Common.h"
+#include "mt_common.h"
 
 class ParseAdaptationField {
 

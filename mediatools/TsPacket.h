@@ -8,7 +8,7 @@
 #ifndef TSPACKET_H_
 #define TSPACKET_H_
 
-#include "Common.h"
+#include "mt_common.h"
 
 class TsPacket {
 
