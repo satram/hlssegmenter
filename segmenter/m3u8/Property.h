@@ -8,7 +8,7 @@
 #ifndef PROPERTY_H_
 #define PROPERTY_H_
 
-#include "Common.h"
+#include "m3u8/Name.h"
 
 class Property
 {

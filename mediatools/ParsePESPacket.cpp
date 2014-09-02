@@ -6,6 +6,7 @@
  */
 
 #include "ParsePESPacket.h"
+#include "Bitstream.h"
 
 class PES_exception: public std::exception
 {

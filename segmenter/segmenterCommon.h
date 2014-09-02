@@ -20,7 +20,7 @@
 
 #include "log4c.h"
 
-#include "Common.h"
+
 #include <ParseTsStream.h>
 #include <m3u8/Name.h>
 #include <m3u8/Property.h>
@@ -49,12 +49,6 @@ class ChunkIndex;
 class Segmenter;
 
 #include "ConfigParams.h"
-//#include "IndexBase.h"
-//#include "IFrameIndex.h"
-//#include "ChunkIndex.h"
-//#include "PlaylistInterface.h"
-//#include "VariantPlaylist.h"
-//#include "HlsPlaylistGenerator.h"
 #include "Segmenter.h"
 
 #endif /* SEGMENTERCOMMON_H_ */

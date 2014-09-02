@@ -8,7 +8,7 @@
 #ifndef ELEMENTARYSTREAM_H_
 #define ELEMENTARYSTREAM_H_
 
-#include "Common.h"
+#include "mt_common.h"
 
 class ElementaryStream {
 public:

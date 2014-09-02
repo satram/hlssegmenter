@@ -8,7 +8,7 @@
 #ifndef PLAYLIST_H_
 #define PLAYLIST_H_
 
-#include "Common.h"
+#include "m3u8/Section.h"
 
 
 class Playlist {

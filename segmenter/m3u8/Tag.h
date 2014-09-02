@@ -8,7 +8,7 @@
 #ifndef TAG_H_
 #define TAG_H_
 
-#include "Common.h"
+#include "m3u8/Property.h"
 
 class Tag {
 	std::string id;

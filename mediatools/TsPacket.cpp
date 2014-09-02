@@ -6,6 +6,10 @@
  */
 
 #include "TsPacket.h"
+#include "Bitstream.h"
+#include "ParseTsHeader.h"
+#include "ParsePESPacket.h"
+#include "ParseAdaptationField.h"
 
 class TS_exception: public std::exception
 {

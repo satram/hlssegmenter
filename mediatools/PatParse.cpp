@@ -6,6 +6,8 @@
  */
 
 #include "PatParse.h"
+#include "Bitstream.h"
+#include "SectionHeader.h"
 
 void PatParse::input_bitstream(Bitstream & bitstream, int current_pid)
 {
