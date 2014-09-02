@@ -39,6 +39,8 @@ class ParseAdaptationField;
 class ParsePESPacket;
 class ParseTsHeader;
 class Profiler;
+class VideoPktInfo;
+class Profiler;
 
 #define BYTE_SIZE 			(8)
 #define NUM_BYTES_IN_WORD 	(4)
