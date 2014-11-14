@@ -11,7 +11,6 @@
 #include "mt_common.h"
 
 class TsPacket {
-
 	log4c_category_t *mycat;
 	int count;
 
@@ -26,6 +25,10 @@ class TsPacket {
 	ParseAdaptationField *adaptation_header;
 
 public:
+//	static Profiler *level1_timer;
+//	static Profiler *level2_timer;
+//	static Profiler *level3_timer;
+
 	TsPacket(int ts_packet_count);
 	virtual ~TsPacket();
 	void input_bitstream(Bitstream &bitstream);

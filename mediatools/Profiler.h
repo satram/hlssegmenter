@@ -9,28 +9,28 @@
 #define PROFILER_H_
 
 #include "mt_common.h"
+#include <chrono>
+#include <limits>
 
 class Profiler
 {
 	std::string name;
-	int previous_ts;
-	int difftime(int firstts, int secondts);
-	int gettime();
-	int get_elapsed_time();
+	std::chrono::time_point<std::chrono::system_clock> begin;
+	std::chrono::time_point<std::chrono::system_clock> end;
 
-	unsigned int min_duration;
-	unsigned int max_duration;
+	double min_duration;
+	double max_duration;
 	unsigned int samplecount;
-	unsigned int avg_duration;
-	long long total_duration;
+	double avg_duration;
+	std::chrono::duration<double, std::micro> total_duration;
 
 public:
 	Profiler(){};
 	Profiler(const std::string &str);
 	virtual ~Profiler();
-	void record_elapsed_time();
+	void stop();
 	void print_stats();
-	void start_timer();
+	void start();
 };
 
 #endif /* PROFILER_H_ */

@@ -16,6 +16,7 @@ ChunkIndex::ChunkIndex() {
 	size = 0;
 	duration = 0;
 	purge = false;
+	discontinuity_flag = false;
 }
 
 ChunkIndex::ChunkIndex(IFrameIndex *iframe) {
@@ -24,6 +25,9 @@ ChunkIndex::ChunkIndex(IFrameIndex *iframe) {
 	size = 0;
 	duration = iframe->duration;
 	purge = false;
+	discontinuity_flag = false;
+	if(duration > input_chunk_interval)
+		discontinuity_flag = true;
 }
 
 ChunkIndex::~ChunkIndex() {
@@ -42,7 +46,7 @@ bool ChunkIndex::update_chunk(IFrameIndex *iframe)
 	{
 		if (start_offset == 0)
 			start_offset = iframe->start_offset;
-		size = iframe->start_offset - start_offset; //TODO chunk size is also summation of accum_gop_size in all IDRs
+		size = iframe->start_offset - start_offset;
 		duration += iframe->duration;
 		return false;
 	}

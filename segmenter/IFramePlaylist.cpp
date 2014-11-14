@@ -19,7 +19,7 @@ IFramePlaylist::~IFramePlaylist() {
 }
 
 
-void IFramePlaylist::add_header(ConfigParams & config)
+void IFramePlaylist::add_header(HlsConfigParams & config)
 {
 }
 

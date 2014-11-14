@@ -35,7 +35,7 @@ enum hls_playlist_type
 	EVENT,
 	VOD
 };
-class ConfigParams;
+class HlsConfigParams;
 struct variant_stream_info;
 class VariantPlaylist;
 class PlaylistInterface;
@@ -48,7 +48,7 @@ class IFrameIndex;
 class ChunkIndex;
 class Segmenter;
 
-#include "ConfigParams.h"
+#include "HlsConfigParams.h"
 #include "Segmenter.h"
 
 #endif /* SEGMENTERCOMMON_H_ */

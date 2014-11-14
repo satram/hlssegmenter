@@ -38,7 +38,7 @@ class Segmenter {
     long long prev_timestamp;
 
 public:
-	Segmenter(ConfigParams &config);
+	Segmenter(HlsConfigParams &config);
 	virtual ~Segmenter();
 
 	void parse_ts_packets(const char *inp_buffer, int bufsize);

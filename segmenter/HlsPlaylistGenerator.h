@@ -17,10 +17,10 @@ class HlsPlaylistGenerator {
 	std::list<VariantPlaylist *> variants;
 
 public:
-	HlsPlaylistGenerator(ConfigParams &config);
+	HlsPlaylistGenerator(HlsConfigParams &config);
 	virtual ~HlsPlaylistGenerator();
 
-	void generate_header(ConfigParams &config);
+	void generate_header(HlsConfigParams &config);
 	void update(IndexBase *index, bool addition);
 
 	void publish_playlist();

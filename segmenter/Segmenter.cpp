@@ -10,7 +10,7 @@
 #include "ChunkIndex.h"
 #include "IFrameIndex.h"
 
-Segmenter::Segmenter(ConfigParams &config)
+Segmenter::Segmenter(HlsConfigParams &config)
 {
 	hls_playlist = new HlsPlaylistGenerator(config);
 	hls_playlist->generate_header(config);
@@ -93,10 +93,10 @@ void Segmenter::check_index_add(std::list<IndexBase *> &index)
 {
     for(auto it = index.begin(), ite = index.end(); it != ite; it++)
     {
-        if((*it)->add_to_playlist.first && !(*it)->add_to_playlist.second)
+        if((*it)->get_add_to_playlist().first && !(*it)->get_add_to_playlist().second)
         {
             hls_playlist->update(*it, true);
-            (*it)->add_to_playlist.second = true;
+            (*it)->get_add_to_playlist().second = true;
 			update_playlist = true;
         }
     }
@@ -111,10 +111,10 @@ void Segmenter::check_index_remove(std::list<IndexBase *> &index)
 	{
 		if(remove_entry)
 		{
-			(*it)->purge = true;
+			(*it)->set_purge_status(true);
 			continue;
 		}
-		current_sliding_window_duration += (*it)->duration;
+		current_sliding_window_duration += (*it)->get_duration();
 		//second condition is to ensure there are atleast 3 valid entries in playlist (Pantos 6.2.2)
 		if(current_sliding_window_duration > sliding_window_duration && (num_valid_index > 2))
 			remove_entry = true;
@@ -122,7 +122,7 @@ void Segmenter::check_index_remove(std::list<IndexBase *> &index)
 	}
 	for(auto it = index.begin(), ite = index.end(); it != ite; it++)
 	{
-		if((*it)->purge)
+		if((*it)->get_purge_status())
 		{
 			hls_playlist->update(*it, false);
 			it = index.erase(it);
@@ -154,12 +154,14 @@ void Segmenter::parse_ts_packets(const char *inp_buffer, int bufsize)
 
     update_iframe_index();
     update_playlists();
+//    std::cout << "update media\n";
     hls_playlist->publish_media(inp_buffer, bufsize);
 
     ts_packet_count += input_ts_stream.get_num_packets();
     byte_offset += bufsize;
 
-    std::cout << "ts_packet_count " << ts_packet_count << std::endl;
+//    std::cout << "--";
+    //std::cout << "ts_packet_count " << ts_packet_count << std::endl;
 
     input_ts_stream.close();
 }

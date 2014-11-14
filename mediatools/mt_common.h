@@ -28,6 +28,8 @@
 
 #include "log4c.h"
 
+#define nullptr NULL
+ 
 class Bitstream;
 class TsPacket;
 class SectionHeader;

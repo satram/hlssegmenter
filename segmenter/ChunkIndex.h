@@ -14,6 +14,7 @@
 class ChunkIndex : public IndexBase
 {
 	static unsigned int input_chunk_interval;
+	bool discontinuity_flag;
 
 public:
 	ChunkIndex();
@@ -29,7 +30,7 @@ public:
 		playlist->update_node(this, var, addition);
 	};
 
-	friend class Segmenter;
+	friend class MediaPlaylist;
 };
 
 #endif /* CHUNKINDEX_H_ */

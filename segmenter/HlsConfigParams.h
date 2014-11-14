@@ -38,11 +38,12 @@ struct variant_stream_info
 };
 
 
-class ConfigParams {
+class HlsConfigParams {
 	std::list<variant_stream_info> variant_streams;
 
 public:
 	//common parameters across variants streams
+	std::string leaf_id;
 	std::string web_server_url;
 	std::string output_folder;
 
@@ -50,8 +51,8 @@ public:
 	unsigned int segment_duration_ms;
 	unsigned int sliding_window_duration_ms;
 
-	ConfigParams();
-	virtual ~ConfigParams();
+	HlsConfigParams();
+	virtual ~HlsConfigParams();
 	void add_variant(variant_stream_info &var);
 	void remove_variant(std::string id);
 	const char *convert_playlist_enum_to_string(hls_playlist_type type);

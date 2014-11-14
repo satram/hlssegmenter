@@ -5,26 +5,26 @@
  *      Author: satram
  */
 
-#include "ConfigParams.h"
+#include "HlsConfigParams.h"
 
-ConfigParams::ConfigParams()
+HlsConfigParams::HlsConfigParams()
 {
 }
 
-ConfigParams::~ConfigParams()
+HlsConfigParams::~HlsConfigParams()
 {
 	for(auto it = variant_streams.begin(), ite = variant_streams.end(); it != ite; it++)
 	{
-		variant_streams.erase(it);
+		it = variant_streams.erase(it);
 	}
 }
 
-void ConfigParams::add_variant(variant_stream_info & var)
+void HlsConfigParams::add_variant(variant_stream_info & var)
 {
 	variant_streams.push_back(var);
 }
 
-void ConfigParams::remove_variant(std::string id)
+void HlsConfigParams::remove_variant(std::string id)
 {
 	for(auto it = variant_streams.begin(), ite = variant_streams.end(); it != ite; it++)
 	{
@@ -37,7 +37,7 @@ void ConfigParams::remove_variant(std::string id)
 }
 
 #define PROCESS_VAL(n) case(n): str = #n; break;
-const char *ConfigParams::convert_playlist_enum_to_string(hls_playlist_type type)
+const char *HlsConfigParams::convert_playlist_enum_to_string(hls_playlist_type type)
 {
 	const char *str;
 	switch(type)

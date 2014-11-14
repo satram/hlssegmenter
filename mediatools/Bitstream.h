@@ -40,7 +40,13 @@ class Bitstream {
     void read_stream(int &inpBuffer);
     void prepare_input_stream();
 
+    Profiler* skip_bytes_timer;
+    Profiler* calibration_timer;
+
+    int find_start_code();
+
 public:
+
 	Bitstream();
 	virtual ~Bitstream();
 	void open(std::string &filename);

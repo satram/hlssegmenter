@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 2.6)
 project (segmenter)
 
 set (SEGMENTER_SRC ChunkIndex.cpp)
-LIST(APPEND SEGMENTER_SRC ConfigParams.cpp)
+LIST(APPEND SEGMENTER_SRC HlsConfigParams.cpp)
 LIST(APPEND SEGMENTER_SRC HlsPlaylistGenerator.cpp)
 LIST(APPEND SEGMENTER_SRC IFrameIndex.cpp)
 LIST(APPEND SEGMENTER_SRC IFramePlaylist.cpp)

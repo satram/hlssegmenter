@@ -114,7 +114,7 @@ int main(int argc, char* argv[])
 {
 	TESTCASE test = PARTIAL_BUF_INPUT;
 	Profiler wrapper("wrapper");
-	wrapper.start_timer();
+	wrapper.start();
 	switch(test)
 	{
 	case FILE_INPUT:
@@ -132,7 +132,7 @@ int main(int argc, char* argv[])
 	default:
 		break;
 	}
-	wrapper.record_elapsed_time();
+	wrapper.stop();
 	wrapper.print_stats();
 	return 0;
 }

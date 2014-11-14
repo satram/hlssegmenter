@@ -14,8 +14,6 @@
 class IFrameIndex : public IndexBase {
 
 	int total_pkt_count;
-
-
 	long long accum_gop_size;
 	long long prev_packet_byte_offset;
 
@@ -29,7 +27,6 @@ public:
 	{
 		playlist->update_node(this, var, addition);
 	};
-	friend class Segmenter;
 	friend class IFramePlaylist;
 	friend class ChunkIndex;
 };

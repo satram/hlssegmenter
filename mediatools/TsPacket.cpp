@@ -5,6 +5,7 @@
  *      Author: satram
  */
 
+#include "Profiler.h"
 #include "TsPacket.h"
 #include "Bitstream.h"
 #include "ParseTsHeader.h"
@@ -20,8 +21,12 @@ public:
 	};
 };
 
+//Profiler *TsPacket::level1_timer = new Profiler("ts_hdr_timer");
+//Profiler *TsPacket::level2_timer = new Profiler("ts_afh_timer");
+//Profiler *TsPacket::level3_timer = new Profiler("ts_pes_timer");
 
-TsPacket::TsPacket(int ts_packet_count){
+TsPacket::TsPacket(int ts_packet_count)
+{
 	mycat = log4c_category_get("tsparser.tspacket");
 	count = ts_packet_count;
 	tsheader = new ParseTsHeader();
@@ -29,7 +34,8 @@ TsPacket::TsPacket(int ts_packet_count){
 	adaptation_header = new ParseAdaptationField();
 }
 
-TsPacket::~TsPacket() {
+TsPacket::~TsPacket()
+{
 	delete tsheader;
 	delete pes_packet;
 	delete adaptation_header;
@@ -42,15 +48,22 @@ void TsPacket::input_bitstream(Bitstream & bitstream)
     data_packet_start_byte_offset = bitstream.get_in_byte_offset();
     ts_packet_size = bitstream.get_ts_packet_size();
 
+//    level1_timer->start();
     tsheader->input_bitstream(bitstream);
+//    level1_timer->stop();
+
     pid = tsheader->get_PID();
     payload_unit_start_indicator = tsheader->get_PUSI();
     adaptation_field_control = tsheader->get_adapation_flag();
-    if(adaptation_field_control == 0x2 || adaptation_field_control == 0x3){
+
+    if(adaptation_field_control == 0x2 || adaptation_field_control == 0x3)
+    {
+//    	level2_timer->start();
 		int start_offset = bitstream.get_in_byte_offset();
 		adaptation_header->input_bitstream(bitstream);
 		int length = adaptation_header->get_length();
 		bitstream.skip_bytes(start_offset, length + LENGTH_VAR_BYTES);
+//		level2_timer->stop();
 	}
 }
 
@@ -61,6 +74,7 @@ int TsPacket::get_pid()
 
 void TsPacket::parse_data_byte(Bitstream & bitstream, bool parse_data)
 {
+//	level3_timer->start();
 	if(adaptation_field_control == 0x1 || adaptation_field_control == 0x3)
 	{
 		switch(pid)
@@ -86,14 +100,17 @@ void TsPacket::parse_data_byte(Bitstream & bitstream, bool parse_data)
 			else
 			{
 				//bitstream.skip_bytes(data_packet_start_byte_offset, TS_PKT_SIZE_BYTES);
-				throw TS_exception();
+				//throw TS_exception();
+				skip_to_end(bitstream);
 			}
 		}
 	}
 	else
 	{
-		throw TS_exception();
+		//throw TS_exception();
+		skip_to_end(bitstream);
 	}
+//	level3_timer->stop();
 }
 
 void TsPacket::skip_to_end(Bitstream & bitstream)

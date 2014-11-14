@@ -17,6 +17,7 @@
 #include <map>
 #include <algorithm>
 #include <exception>
+#include <stdexcept>
 
 class NameBase;
 class Property;

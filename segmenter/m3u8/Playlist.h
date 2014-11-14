@@ -10,7 +10,6 @@
 
 #include "m3u8/Section.h"
 
-
 class Playlist {
 	std::list<Section> section_list;
 	std::ostringstream oss;

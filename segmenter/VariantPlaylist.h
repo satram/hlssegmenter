@@ -14,20 +14,22 @@ class VariantPlaylist {
     std::string transcoded_output_url;
     std::string transcoded_output_path;
     std::string transcoded_output_filename;
+    std::string ready_for_streaming_filename;
     std::string media_playlist_filename;
     std::string iframe_playlist_filename;
     MediaPlaylist *mediaUrl;
     IFramePlaylist *iframeUrl;
+    std::string leaf_id;
 
     std::ofstream mediafile;
 
 public:
-    VariantPlaylist(ConfigParams & config, variant_stream_info & var);
+    VariantPlaylist(HlsConfigParams & config, variant_stream_info & var);
     virtual ~VariantPlaylist();
     void publish_playlist();
     void update_playlist(IndexBase *index, bool addition);
 
-    void add_header(ConfigParams & config, variant_stream_info & var);
+    void add_header(HlsConfigParams & config, variant_stream_info & var);
 
     void publish_media(const char *inp_buffer, int bufsize);
     void finalize_playlist();

@@ -4,7 +4,7 @@
  *  Created on: Jul 2, 2014
  *      Author: satram
  */
-
+#include "Profiler.h"
 #include "Bitstream.h"
 
 Bitstream::Bitstream() {
@@ -17,10 +17,14 @@ Bitstream::Bitstream() {
 	inStream = NULL;
 	sstream = NULL;
 	log4c_category_log(mycat, LOG4C_PRIORITY_TRACE, "readBufferSize %d, writeBufferSize %d", readBufferSize, writeBufferSize);
+	skip_bytes_timer = new Profiler("skip_bytes_t");
+	calibration_timer = new Profiler("calibration_t");
 }
 
-Bitstream::~Bitstream() {
-
+Bitstream::~Bitstream()
+{
+	skip_bytes_timer->print_stats();
+	calibration_timer->print_stats();
 }
 
 
@@ -97,38 +101,52 @@ void Bitstream::read_stream(int &inpbuffer)
     inStream->read((char *)&inpbuffer, sizeof(int));
 }
 
-void Bitstream::calibrate_ts_packet_size()
+int Bitstream::find_start_code()
 {
 	unsigned char tmp;
-	log4c_category_log(mycat, LOG4C_PRIORITY_INFO, "searching for start_offset at %d", (int)inStream->tellg());
+	int byte_offset = -1;
 	while(1)
 	{
 		inStream->read((char *)&tmp, 1);
+		if(inStream->eof())
+			return byte_offset;
 		if(tmp == 0x47 || tmp == 0x48)
 		{
-			start_offset = (int)inStream->tellg() - 1;
-			log4c_category_log(mycat, LOG4C_PRIORITY_INFO, "calibrate - startcode %x start_offset %d", tmp, start_offset);
+			byte_offset = (int)inStream->tellg() - 1;
+			log4c_category_log(mycat, LOG4C_PRIORITY_INFO, "calibrate - startcode %x byte_offset %d", tmp, byte_offset);
+//			printf("calibrate - startcode %x start_offset %d\n", tmp, byte_offset);
 			break;
 		}
 	}
-	//got to default boundary
-	inStream->seekg(TS_PKT_SIZE_BYTES + start_offset, std::ios::beg);
-	log4c_category_log(mycat, LOG4C_PRIORITY_INFO, "searching for ts_pkt_size at pos %d", (int)inStream->tellg());
-	while(1)
-	{
-		inStream->read((char *)&tmp, 1);
-		if(tmp == 0x47 || tmp == 0x48)
-		{
-			ts_packet_size = (int)inStream->tellg() - 1 - start_offset;
-			log4c_category_log(mycat, LOG4C_PRIORITY_INFO, "calibrate - following-startcode %x ts_packet_size %d", tmp, ts_packet_size);
-			break;
-		}
-	}
-	inStream->seekg(start_offset, std::ios::beg);
-	read_stream();
+	return byte_offset;
 }
 
+void Bitstream::calibrate_ts_packet_size()
+{
+	int byte_offset = -1;
+	log4c_category_log(mycat, LOG4C_PRIORITY_INFO, "searching for start_offset at %d", (int)inStream->tellg());
+//	printf("searching for start_offset at %d\n", (int)inStream->tellg());
+	if(inStream->tellg() == -1)	return;
+	byte_offset = find_start_code();
+	if(byte_offset >= 0)
+		start_offset = byte_offset;
 
+	//got to default boundary
+	if((TS_PKT_SIZE_BYTES + start_offset) >= inBufSize)
+		ts_packet_size = TS_PKT_SIZE_BYTES;
+	else
+	{
+		inStream->seekg(TS_PKT_SIZE_BYTES + start_offset, std::ios::beg);
+		log4c_category_log(mycat, LOG4C_PRIORITY_INFO, "searching for ts_pkt_size at pos %d", (int)inStream->tellg());
+//		printf("searching for ts_pkt_size at %d\n", (int)inStream->tellg());
+		byte_offset  = find_start_code();
+		if(byte_offset > 0)
+			ts_packet_size = byte_offset - start_offset;
+	}
+	inStream->seekg(start_offset, std::ios::beg);
+//	printf("End of calibrate, start_offset %d and ts_packet_size %d\n", start_offset, ts_packet_size);
+	read_stream();
+}
 
 
 /*
@@ -231,6 +249,7 @@ void Bitstream::skip_bytes(int current_pos, int skip_size_bytes)
 	inStream->seekg(current_pos, std::ios::beg);
 	if(current_pos + skip_size_bytes >= inBufSize)
 	{
+		//bad logic to set eof flag in BitStream
 		char tmp;
 		inStream->seekg(0, std::ios::end);
 		inStream->read(&tmp, 1);
@@ -242,16 +261,22 @@ void Bitstream::skip_bytes(int current_pos, int skip_size_bytes)
 
 void Bitstream::skip_bytes_calibrate(int current_pos, int skip_size_bytes)
 {
+//	if(current_pos % 188)
+//		assert(false);
+	skip_bytes_timer->start();
 	skip_bytes(current_pos, skip_size_bytes);
+	skip_bytes_timer->stop();
 	if(inStream->eof() || (inStream->tellg() == -1))
 		return;
 	unsigned char start_code = peek_bits(8);
 	if(start_code != 0x47 && start_code != 0x48)
 	{
+		calibration_timer->start();
 		log4c_category_log(mycat, LOG4C_PRIORITY_TRACE, "going to calibrate");
 		inStream->seekg(current_pos, std::ios::beg);
 		calibrate_ts_packet_size();
 		inStream->seekg(ts_packet_size, std::ios::cur);
+		calibration_timer->stop();
 	}
 }
 

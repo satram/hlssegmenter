@@ -7,77 +7,58 @@
 
 #include "Profiler.h"
 
-Profiler::Profiler(const std::string &str) {
+Profiler::Profiler(const std::string &str)
+{
 	name = str;
-	previous_ts = 0;
-	min_duration = 0x7fffffff;
-	max_duration = 0;
+	min_duration = std::numeric_limits<double>::max();
+	max_duration = std::numeric_limits<double>::min();
 	avg_duration = 0;
 	samplecount = 0;
-	total_duration = 0;
+	total_duration = std::chrono::duration<double, std::micro>::zero();
+	begin = end = std::chrono::system_clock::now();
 }
 
 Profiler::~Profiler() {
 	// TODO Auto-generated destructor stub
 }
 
-int Profiler::difftime(int firstts, int secondts)
-{
-	int diff = firstts - secondts;
-	return diff;
-}
-
-int Profiler::gettime()
-{
-	struct timeval tv;
-	struct timezone tz;
-	if(gettimeofday(&tv, &tz) == -1)
-		return 0;
-	else
-	{
-		int time_elapsed = tv.tv_sec * 1000000 + tv.tv_usec;
-		return time_elapsed;
-	}
-}
-
-int Profiler::get_elapsed_time()
-{
-	int current_ts = gettime();
-	samplecount++;
-	if(previous_ts == 0)
-	{
-		previous_ts = current_ts;
-		return 0;
-	}
-	else
-	{
-		int diff = difftime(current_ts ,previous_ts);
-		previous_ts = current_ts;
-		return diff;
-	}
-}
-
 void Profiler::print_stats()
 {
-	printf("%s Profiler: SampleCnt %d Average(us) %d Max(us) %d Min(us) %d Total(us) %llu\n", name.c_str(), samplecount, avg_duration, max_duration, min_duration, total_duration);
+#if defined(PROFILING_SUPPORT)
+	//printf("%s Profiler: SampleCnt %d Average(us) %d Max(us) %d Min(us) %d Total(us) %llu\n", name.c_str(), samplecount, avg_duration, max_duration, min_duration, total_duration);
+	std::ostringstream oss;
+	oss << name;
+	oss << "\t SampleCnt " << std::setw(10) << samplecount;
+	oss << "\t Avg(us) " << std::setw(10) << avg_duration;
+	oss << "\t min(us) " << std::setw(10) << min_duration;
+	oss << "\t max(us) " << std::setw(10) << max_duration;
+	oss << "\t Total(ms) " << std::setw(10) << std::chrono::duration<double, std::milli>(total_duration).count() << std::endl;
+	std::cout << oss.str();
+#endif
 }
 
-
-
-void Profiler::record_elapsed_time()
+void Profiler::stop()
 {
-	unsigned int diff = get_elapsed_time();
+#if defined(PROFILING_SUPPORT)
+	end = std::chrono::system_clock::now();
+	samplecount++;
+	std::chrono::duration<double, std::micro> elapsed = end - begin;
+	double diff = elapsed.count();
+	begin = end;
 	if(diff < min_duration)
 		min_duration = diff;
 	if(diff > max_duration)
 		max_duration = diff;
 	avg_duration = ((avg_duration * (samplecount-1)) + diff) / samplecount;
-	total_duration += diff;
+	total_duration += elapsed;
+#endif
 }
 
-void Profiler::start_timer()
+void Profiler::start()
 {
-	previous_ts = gettime();
+#if defined(PROFILING_SUPPORT)
+	begin = std::chrono::system_clock::now();
+#endif
 }
 
 

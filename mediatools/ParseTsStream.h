@@ -30,11 +30,19 @@ class ParseTsStream {
     VideoStream *video_stream;
     AudioStream *audio_stream;
 
-    Profiler input_memcopy;
-    Profiler pes_pkt_copy;
+    Profiler input_memcopy_timer;
+    Profiler pes_pkt_copy_timer;
+    Profiler pes_parse_timer;
     Profiler ts_pkt_profiler;
     Profiler video_pkt_profiler;
     Profiler audio_pkt_profiler;
+    Profiler ts_header_profiler;
+    Profiler pat_parse_timer;
+    Profiler pmt_parse_timer;
+    //Profiler skip_timer;
+
+    Profiler level1_timer;
+    Profiler level2_timer;
 
     int ts_packet_count;
 

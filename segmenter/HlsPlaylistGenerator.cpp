@@ -9,7 +9,7 @@
 #include "MasterPlaylist.h"
 #include "VariantPlaylist.h"
 
-HlsPlaylistGenerator::HlsPlaylistGenerator(ConfigParams &config)
+HlsPlaylistGenerator::HlsPlaylistGenerator(HlsConfigParams &config)
 {
 	master = new MasterPlaylist();
 	std::string master_playlistname = "master.m3u8";
@@ -29,7 +29,7 @@ HlsPlaylistGenerator::~HlsPlaylistGenerator()
 		delete (*it);
 }
 
-void HlsPlaylistGenerator::generate_header(ConfigParams & config)
+void HlsPlaylistGenerator::generate_header(HlsConfigParams & config)
 {
 	master->add_header(config);
 	auto var_stream_info = config.variant_streams.begin();
@@ -56,7 +56,8 @@ void HlsPlaylistGenerator::publish_playlist()
 
 void HlsPlaylistGenerator::publish_media(const char *inp_buffer, int bufsize)
 {
-	auto it = variants.back();
+//	std::cout << "publish_media called\n";
+	VariantPlaylist * it = variants.back();
 	it->publish_media(inp_buffer, bufsize);
 }
 
