@@ -18,7 +18,7 @@
 ParseTsStream::ParseTsStream()
 {
 #if !defined(CROSS_COMPILE)
-	log4c_init();
+//	log4c_init();
 #endif
 	pat_packet = new PatParse();
 	pmt_packet = new PmtParse();
@@ -70,9 +70,9 @@ ParseTsStream::~ParseTsStream() {
 	delete pat_packet;
 	delete pmt_packet;
 #if !defined(CROSS_COMPILE)
-	if ( log4c_fini()){
-		log4c_category_log(mycat, LOG4C_PRIORITY_ERROR,"log4c_fini() failed");
-	}
+// 	if ( log4c_fini()){
+// 		log4c_category_log(mycat, LOG4C_PRIORITY_ERROR,"log4c_fini() failed");
+// 	}
 #endif
 }
 
