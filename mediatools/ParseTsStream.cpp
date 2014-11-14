@@ -17,7 +17,7 @@
 //class related
 ParseTsStream::ParseTsStream()
 {
-	log4c_init();
+//	log4c_init();
 	pat_packet = new PatParse();
     pmt_packet = new PmtParse();
     ts_packet_count = 1;
@@ -40,9 +40,9 @@ ParseTsStream::~ParseTsStream() {
 //	pes_pkt_copy.print_stats();
 	delete pat_packet;
 	delete pmt_packet;
-	if ( log4c_fini()){
-		  log4c_category_log(mycat, LOG4C_PRIORITY_ERROR,"log4c_fini() failed");
-	  }
+//	if ( log4c_fini()){
+//		  log4c_category_log(mycat, LOG4C_PRIORITY_ERROR,"log4c_fini() failed");
+//	  }
 }
 
 

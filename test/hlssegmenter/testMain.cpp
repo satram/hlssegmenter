@@ -23,8 +23,8 @@ int main(int argc, char *argv[])
 	config.playlist_type = LIVE;
 	config.sliding_window_duration_ms = 40000;
 #endif
-	config.segment_duration_ms = 5000;
-	config.web_server_url = "http://10.121.1.63:80/hlschunks/";
+	config.segment_duration_ms = 2000;
+	config.web_server_url = "http://10.121.1.121:80/hlschunks/";
 	config.output_folder = "/var/www/html/hlschunks/";
 
 	variant_stream_info var1;
