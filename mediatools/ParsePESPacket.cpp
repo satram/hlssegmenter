@@ -19,7 +19,7 @@ public:
 	};
 };
 
-#define pes_assert(x) {if(!x) throw PES_exception();}
+#define pes_assert(x) {if(!(x)) throw PES_exception();}
 
 
 void ParsePESPacket::input_bitstream(Bitstream & bitstream)
