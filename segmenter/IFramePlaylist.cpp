@@ -21,6 +21,12 @@ IFramePlaylist::~IFramePlaylist() {
 
 void IFramePlaylist::add_header(HlsConfigParams & config)
 {
+    Section header = playlist.get_section("header");
+    if(config.playlist_type != LIVE)
+    header.add_tag("PLAYLIST-TYPE", config.convert_playlist_enum_to_string(config.playlist_type));
+    double duration = (double)config.segment_duration_ms / 1000.0;
+    header.add_tag("TARGETDURATION", duration);
+    playlist.modify_section(header);
 }
 
 void IFramePlaylist::update_node(IFrameIndex *index, VariantPlaylist *variant_playlist, bool addition)

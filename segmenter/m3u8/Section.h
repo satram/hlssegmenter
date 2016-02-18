@@ -47,7 +47,7 @@ public:
 		if(!path.empty() && path.find_last_of("/") != (path.size()-1))
 			oss << "/";
 		if(!locator.empty())
-			oss << locator << "\n";
+			oss << locator;
 		oss << "\n";
 		return oss.str();
 	};
